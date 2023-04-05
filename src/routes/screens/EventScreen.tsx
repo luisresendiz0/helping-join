@@ -11,6 +11,7 @@ const EventScreen = () => {
 
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const mark = useRef<mapboxgl.Marker | null>(null);
   const [lng, setLng] = useState(-99.14069366766122);
   const [lat, setLat] = useState(19.438492197400965);
   const [zoom, setZoom] = useState(14);
@@ -23,8 +24,9 @@ const EventScreen = () => {
     // geocoding with countries
     return geocodingClient
       .forwardGeocode({
-        query: 'Av. Juárez S/N, Centro Histórico de la Cdad. de México, Centro, Cuauhtémoc, 06050 Ciudad de México, CDMX',
+        query: 'Bahía Guantánamo 73, Verónica Anzúres, Miguel Hidalgo, 11300 Ciudad de México, CDMX',
         countries: ['mx'],
+        types: ["address"],
         limit: 2,
         language: ['es']
       })
@@ -74,12 +76,10 @@ const EventScreen = () => {
       let cen: [number,number] = [marker.center.at(0)!,marker.center.at(1)!];
 
       // make a marker for each feature and add it to the map
-      new mapboxgl.Marker(el)
-        .setLngLat(coord)
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML('<p>' + marker.properties.description + '</p>')
-        )
+      mark.current = new mapboxgl.Marker({
+        anchor: "center",
+      })
+        .setLngLat([coord[0], coord[1]])
         .addTo(map.current!);
 
       map.current!.on('load', async () => {
