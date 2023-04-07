@@ -8,9 +8,11 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link as RLink, useNavigate } from "react-router-dom";
 import LoginLayout from "../../components/general/LoginLayout";
 
 const SignInScreen = () => {
@@ -73,6 +75,12 @@ const SignInScreen = () => {
               Iniciar sesión
             </Button>
           </Flex>
+          <Text mt={4}>
+            Aun no tiene una cuenta?{' '}
+            <Link color='blue.500' href='#'>
+              <RLink to="/signup">Regístrese</RLink>
+            </Link>
+          </Text>
         </Box>
       </Flex>
     </LoginLayout>

@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { FunctionComponent, PropsWithChildren } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import pattern from "../../assets/pattern.webp";
 
 const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
   return (
