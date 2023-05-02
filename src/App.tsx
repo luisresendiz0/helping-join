@@ -23,8 +23,6 @@ const App = () => {
     return sub;
   }, []);
 
-  console.log(loading);
-
   if(loading) {
     return null;
   }
