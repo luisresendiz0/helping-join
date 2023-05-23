@@ -8,26 +8,179 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
+  Progress,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { Link as RLink, useNavigate } from "react-router-dom";
+import { Navigate, Link as RLink, useNavigate } from "react-router-dom";
 import LoginLayout from "../../components/general/LoginLayout";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import loadingAtom from "../../atoms/loadingAtom";
+import signInVoluntario from "../../services/api/signInVoluntario";
+import userAtom from "../../atoms/userAtom";
+import tokenAtom from "../../atoms/tokenAtom";
+import signInBeneficiado from "../../services/api/signInBeneficiado";
+import { useState } from "react";
+import Voluntario from "../../types/Voluntario";
+import signInModerador from "../../services/api/signInModerador";
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 const SignInScreen = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useAtom(loadingAtom);
+  const setUser = useSetAtom(userAtom);
+  const setToken = useSetAtom(tokenAtom);
+  const user = useAtomValue(userAtom);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<{
-    type: "email" | "password";
-    message: string;
-  } | null>(null);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
-  const handleOnPressSignIn = () => {
-    navigate("/recomendaciones");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    setFocus,
+  } = useForm<Inputs>();
+
+  const handleOnSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
+
+    try {
+      const signInAsVoluntario = await signInVoluntario(data);
+
+      if (signInAsVoluntario.success) {
+        setUser(signInAsVoluntario.data.usuario);
+        setToken(signInAsVoluntario.data.token);
+        localStorage.setItem(
+          "user",
+          JSON.stringify(signInAsVoluntario.data.usuario)
+        );
+        localStorage.setItem("token", signInAsVoluntario.data.token);
+        setLoading(false);
+        navigate("/recomendaciones");
+        return;
+      }
+
+      if (signInAsVoluntario.message.includes("Contraseña incorrecta")) {
+        setError("password", {
+          type: "manual",
+          message: "Contraseña incorrecta",
+        });
+        setFocus("password");
+        setLoading(false);
+        return;
+      }
+
+      if (signInAsVoluntario.message.includes("usuario no existe")) {
+        const signInAsBeneficiado = await signInBeneficiado(data);
+
+        if (signInAsBeneficiado.success) {
+          setUser(signInAsBeneficiado.data.usuario);
+          setToken(signInAsBeneficiado.data.token);
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify(signInAsBeneficiado.data.usuario)
+          );
+          localStorage.setItem("token", signInAsBeneficiado.data.token);
+
+          setLoading(false);
+          navigate("/perfil-beneficiado");
+          return;
+        }
+
+        if (signInAsBeneficiado.message.includes("Contraseña incorrecta")) {
+          setError("password", {
+            type: "manual",
+            message: "Contraseña incorrecta",
+          });
+
+          setFocus("password");
+          setLoading(false);
+          return;
+        }
+
+        if (signInAsBeneficiado.message.includes("usuario no existe")) {
+          const signInAsModerador = await signInModerador(data);
+
+          if (signInAsModerador.success) {
+            setUser(signInAsModerador.data.moderador);
+            setToken(signInAsModerador.data.token);
+            localStorage.setItem(
+              "user",
+              JSON.stringify(signInAsModerador.data.moderador)
+            );
+            localStorage.setItem("token", signInAsModerador.data.token);
+
+            setLoading(false);
+            navigate("/reportes");
+            return;
+          }
+
+          if (
+            signInAsModerador.message.includes(
+              "necesario cambiar la contraseña"
+            )
+          ) {
+            setLoading(false);
+            const id = signInAsModerador.message.split(":")[1].trim();
+            navigate("/update-moderador-password/" + id, { replace: true });
+            return;
+          }
+
+          if (signInAsModerador.message.includes("Contraseña incorrecta")) {
+            setError("password", {
+              type: "manual",
+              message: "Contraseña incorrecta",
+            });
+
+            setFocus("password");
+            setLoading(false);
+            return;
+          }
+
+          if (signInAsModerador.message.includes("usuario no existe")) {
+            setError("email", {
+              type: "manual",
+              message: "El usuario no existe",
+            });
+
+            setFocus("email");
+            setLoading(false);
+            return;
+          }
+        }
+
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
+
+  if (user) {
+    return (
+      <Navigate
+        to={
+          "id_voluntario" in user
+            ? "/recomendaciones"
+            : "id_beneficiado" in user
+            ? "/perfil-beneficiado"
+            : "/perfil"
+        }
+        replace
+      />
+    );
+  }
 
   return (
     <LoginLayout>
@@ -36,49 +189,59 @@ const SignInScreen = () => {
           <Heading textAlign="center" mb={8}>
             Iniciar sesión
           </Heading>
-          <FormControl isInvalid={error?.type === "email"} mb={4} isRequired>
-            <FormLabel>Email</FormLabel>
+          <FormControl
+            isInvalid={errors.email ? true : false}
+            mb={4}
+            isRequired
+          >
+            <FormLabel>Correo electronico</FormLabel>
             <Input
-              variant="filled"
+              w={400}
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email", { required: "Este campo es requerido" })}
             />
-            {error?.type === "email" ? (
-              <FormErrorMessage>{error.message}</FormErrorMessage>
-            ) : (
-              <FormHelperText>
-                Se enviará un correo de verificación a esta dirección.
-              </FormHelperText>
+            {errors.email && (
+              <FormErrorMessage>{errors.email.message}</FormErrorMessage>
             )}
           </FormControl>
 
-          <FormControl isInvalid={error?.type === "password"} mb={8} isRequired>
+          <FormControl
+            isInvalid={errors.password ? true : false}
+            mb={8}
+            isRequired
+          >
             <FormLabel>Contraseña</FormLabel>
-            <Input
-              variant="filled"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {error?.type === "password" ? (
-              <FormErrorMessage>{error.message}</FormErrorMessage>
-            ) : (
-              <FormHelperText>
-                Debe tener al menos 8 caracteres, una mayúscula, una minúscula y
-                un número.
-              </FormHelperText>
+            <InputGroup size="md">
+              <Input
+                type={show ? "text" : "password"}
+                {...register("password", {
+                  required: "Este campo es requerido",
+                })}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Ocultar" : "Ver"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {errors.password && (
+              <FormErrorMessage>{errors.password.message}</FormErrorMessage>
             )}
           </FormControl>
           <Flex justify="center">
-            <Button onClick={handleOnPressSignIn} colorScheme="blue">
+            <Button
+              onClick={handleSubmit(handleOnSubmit)}
+              colorScheme="blue"
+              isLoading={loading}
+              loadingText="Iniciando sesion..."
+            >
               Iniciar sesión
             </Button>
           </Flex>
-          <Text mt={4}>
-            Aun no tiene una cuenta?{' '}
-            <Link color='blue.500' href='#'>
-              <RLink to="/signup">Regístrese</RLink>
+          <Text mt={12}>
+            Aun no tiene una cuenta?{" "}
+            <Link as={RLink} color="blue.500" to="/signup">
+              Regístrese
             </Link>
           </Text>
         </Box>

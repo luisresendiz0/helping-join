@@ -21,9 +21,32 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { searchEvents } from "../../services/api/search";
 
 const SearchScreen = () => {
   const [search, setSearch] = useState("");
+
+  const { data, isLoading } = useQuery(["events"], () =>
+    searchEvents({
+      text: search,
+      type: "evento",
+      categoryId: 1,
+      fecha_inicio: "",
+      fecha_fin: "",
+      entidad: "Ciudad de México",
+      alcaldia: "Iztapalapa",
+    })
+  );
+
+  // const searchMutate = useMutation({
+  //   mutationFn: (text) => {
+  //     return console.log("search", text);
+  //   },
+  //   onSuccess: () => {
+
+  //   }
+  // })
 
   return (
     <Grid
@@ -40,7 +63,7 @@ const SearchScreen = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Busca por evento, organización, ciudad, etc."
+            placeholder="Busca por nombre de evento, organización, ciudad, etc."
           />
         </FormControl>
         <Box mb={8}>
@@ -57,7 +80,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -65,7 +88,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -73,7 +96,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -81,7 +104,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -89,7 +112,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -97,7 +120,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -105,7 +128,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -113,7 +136,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -121,7 +144,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -129,7 +152,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -137,7 +160,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -145,7 +168,7 @@ const SearchScreen = () => {
           <Box
             w="100%"
             h="200px"
-            borderColor="gray.300"
+            borderColor="pink.300"
             borderWidth={1}
             borderStyle="solid"
             borderRadius={8}
@@ -156,7 +179,7 @@ const SearchScreen = () => {
         rowSpan={11}
         colSpan={2}
         borderLeft="1px solid"
-        borderColor="gray.300"
+        borderColor="pink.300"
         p={4}
       >
         <Heading mb={8} size="md">
@@ -165,7 +188,7 @@ const SearchScreen = () => {
         <VStack
           spacing={8}
           align="start"
-          divider={<StackDivider borderColor="gray.200" />}
+          divider={<StackDivider borderColor="pink.200" />}
         >
           <VStack spacing={4} align="flex-start">
             <Checkbox defaultChecked>Eventos</Checkbox>

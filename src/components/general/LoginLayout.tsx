@@ -17,7 +17,7 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
       templateRows="repeat(12, 1fr)"
       templateColumns="repeat(12, 1fr)"
     >
-      <GridItem colSpan={12} borderBottom="1px solid" borderColor="gray.300">
+      <GridItem colSpan={12} borderBottom="1px solid" borderColor="pink.300">
         <Flex
           direction="row"
           justify="flex-start"
@@ -34,8 +34,8 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
         rowSpan={11}
         colSpan={6}
         borderRight="1px solid"
-        borderColor="gray.300"
-        bg="gray.100"
+        borderColor="pink.300"
+        bg="pink.100"
       >
         {/* <Image
           src={pattern}

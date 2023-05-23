@@ -1,63 +1,96 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  SimpleGrid,
+  Tag,
+  Text,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Recomendation } from "../../types/Recomendation";
 import { generateRecomendationsById } from "../../services/api/generateRecomendationsById";
 import { getRecomendationsById } from "../../services/api/getRecomendationsById";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import userAtom from "../../atoms/userAtom";
+import { useAtomValue } from "jotai";
+import Voluntario from "../../types/Voluntario";
 
 const RecommendationsScreen = () => {
-  const [recomendations, setRecomendations] = useState<Array<Recomendation>>([]);
-  const [cats, setCats] = useState<string>("");
+  const userValue = useAtomValue(userAtom);
+  const user = userValue as Voluntario;
+
+  const [recomendations, setRecomendations] = useState<Array<Recomendation>>(
+    []
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
     const findRecomendations = async () => {
-      const voluntarioId = 3;
+      const voluntarioId = user.id_voluntario || 0;
       try {
         await generateRecomendationsById(voluntarioId);
         const data = await getRecomendationsById(voluntarioId);
-        console.log(data);
         setRecomendations(data.data);
-        setCats(data.cats);
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     findRecomendations();
-  }, [])
+  }, []);
 
   const handleOnClick = (id: number) => {
     navigate(`/eventos/${id}`);
-  }
+  };
+
+  if (!recomendations.length) return <Box>No hay recomendaciones</Box>;
 
   return (
     <Box>
       <Heading mb={8}>Recomendaciones</Heading>
-      <Text mb={8}>Categorias: {cats}</Text>
-      <SimpleGrid columns={4} spacing={10} w="full" h="container.sm">
-        {recomendations.map(recomendation => {
+      <SimpleGrid columns={4} spacing={8} w="full" h="container.sm">
+        {recomendations.map((recomendation) => {
           return (
             <Box
               key={recomendation.id_evento}
               w="100%"
               h="100%"
-              borderColor="gray.300"
+              borderColor="pink.300"
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}
+              p={4}
               onClick={() => handleOnClick(recomendation.id_evento)}
             >
-              <Text>Evento id: {recomendation.id_evento}</Text>
-              <Text>Nombre: {recomendation.nombre}</Text>
-              <Text>Fecha inicio: {recomendation.fecha_inicio}</Text>
-              <Text>Fecha fin: {recomendation.fecha_fin}</Text>
-              <Text>Descripcion: {recomendation.descripcion}</Text>
-              <Text>Categorias: {recomendation.categorias}</Text>
+              <Text fontWeight="bold" fontSize={18}>
+                {recomendation.nombre}
+              </Text>
+              <Text>
+                Inicia:{" "}
+                {format(
+                  new Date(recomendation.fecha_inicio),
+                  "dd LLLL yyyy hh:mm aaa"
+                )}
+              </Text>
+              <Text>
+                Termina:{" "}
+                {format(
+                  new Date(recomendation.fecha_fin),
+                  "dd LLLL yyyy hh:mm aaa"
+                )}
+              </Text>
+              <Wrap mt={2}>
+                {recomendation.categorias.split(",").map((cat) => (
+                  <WrapItem key={cat}>
+                    <Tag>{cat}</Tag>
+                  </WrapItem>
+                ))}
+              </Wrap>
             </Box>
-          )
+          );
         })}
-        
       </SimpleGrid>
     </Box>
   );

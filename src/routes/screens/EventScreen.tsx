@@ -1,124 +1,123 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
-import mapboxgl from "mapbox-gl";
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import {
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  Textarea,
+  useDisclosure,
+} from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import mbxGeocoding from '@mapbox/mapbox-sdk/services/geocoding';
 import { getEventById } from "../../services/api/getEventById";
-
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoib21hcnJhbWciLCJhIjoiY2xmdDA1ZG5pMDYwczNmcXl4bWMwNDg1ZCJ9.Q4kaTXVoH5VIfR1mgiRBRg";
+import { updateEventoInterest } from "../../services/api/updateEventoInterest";
+import { createReporte } from "../../services/api/createReporte";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useAtomValue } from "jotai";
+import userAtom from "../../atoms/userAtom";
+import { format } from "date-fns";
+import LocationMap from "../../components/general/LocationMap";
+import DisplayEvento from "../../components/eventos/DisplayEvento";
+import Voluntario from "../../types/Voluntario";
 
 const EventScreen = () => {
   const query = useParams();
+  const userValue = useAtomValue(userAtom);
+  const queryClient = useQueryClient();
 
-  const mapContainer = useRef<any>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const mark = useRef<mapboxgl.Marker | null>(null);
-  const [details, setDetails] = useState<any>(null); // TODO: change type
+  const user = userValue as Voluntario;
 
-  const currentDirection = `${details?.calle} ${details?.numero_exterior}, ${details?.colonia}, ${details?.alcaldia}, ${details?.entidad}, Mexico`
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [descripcion, setDescripcion] = useState<string>("");
 
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["getEventById", Number(query.id), user?.id_voluntario],
+    queryFn: () => getEventById(Number(query.id), user?.id_voluntario),
+  });
 
-  const fetchData = useCallback(() => {
+  const meInteresaMutation = useMutation({
+    mutationFn: () =>
+      updateEventoInterest(Number(query.id), user?.id_voluntario),
+    onSuccess: () => {
+      queryClient.invalidateQueries([
+        "getEventById",
+        Number(query.id),
+        user?.id_voluntario,
+      ]);
+    },
+  });
 
-    const geocodingClient = mbxGeocoding({
-      accessToken: mapboxgl.accessToken,
-    });
+  const currentDirection = `${data?.calle} ${data?.numero_exterior}, ${data?.colonia}, ${data?.alcaldia}, ${data?.entidad}, ${data?.codigo_postal}, Mexico`;
 
-    // geocoding with countries
-    return geocodingClient
-      .forwardGeocode({
-        query: currentDirection,
-        countries: ['mx'],
-        types: ["address"],
-        limit: 1,
-        language: ['es']
-      })
-      .send()
-      .then((response) => {
-        const match = response.body;
-        const coordinates = match.features[0].geometry.coordinates;
-        const placeName = match.features[0].place_name;
-        const center = match.features[0].center;
+  const handleOnChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length > 128) return;
+    setDescripcion(e.target.value);
+  };
 
-        return {
-          type: 'Feature',
-          center: center,
-          geometry: {
-            type: 'Point',
-            coordinates: coordinates,
-          },
-          properties: {
-            description: placeName,
-          },
-        };
-      });  
-  },[details]);
+  const handleOnClickEnviar = async () => {
+    try {
+      await createReporte(Number(query.id), 3, descripcion);
+      setDescripcion("");
+      onClose();
+    } catch (error) {}
+  };
 
-  useEffect(() => {
-    const getEventoDetails = async () => {
-      try {
-        const details = await getEventById(Number(query.id));
-        setDetails(details.data);
+  if (isLoading || !data) return <p>Loading...</p>;
 
-        if (map.current) return; // initialize map only once
-
-        map.current = new mapboxgl.Map({
-          container: mapContainer.current,
-          style: "mapbox://styles/mapbox/streets-v12",
-          center: [-99.14069366766122, 19.438492197400965],
-          zoom: 12,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    getEventoDetails();
-
-  }, []);
-
-  useEffect(() => {
-    if (!map.current || !details) return; // Waits for the map to initialise
-
-    const results = fetchData();
-
-    results.then((marker) => {
-      // create a HTML element for each feature
-      var el = document.createElement('div');
-      el.className = 'marker';
-      let coord: [number,number] = [marker.geometry.coordinates.at(0)! , marker.geometry.coordinates.at(1)!]; 
-      let cen: [number,number] = [marker.center.at(0)!,marker.center.at(1)!];
-
-      // make a marker for each feature and add it to the map
-      mark.current = new mapboxgl.Marker({
-        anchor: "center",
-      })
-        .setLngLat([coord[0], coord[1]])
-        .addTo(map.current!);
-
-      map.current!.on('load', async () => {
-        map.current!.flyTo({
-          center: cen,
-        });
-      });
-    });
-  }, [fetchData, details, map.current]);
-
-  
-  
   return (
     <Box>
-      <Heading mb={8}>{`Detalle de evento ${query.id}`}</Heading>
-      <Text>Descripción</Text>
-      <Text>Fecha inicio</Text>
-      <Text>Fecha fin</Text>
-      <Text>Dirección: {currentDirection}</Text>
-      <div
-        ref={mapContainer}
-        className="map-container"
-        style={{ width: "400px", height: "400px" }}
-      />
+      <DisplayEvento evento={data}>
+        <HStack mt={4}>
+          <Button
+            isDisabled={data.interesado > 0}
+            colorScheme="yellow"
+            onClick={() => meInteresaMutation.mutate()}
+          >
+            Me interesa
+          </Button>
+          <Button
+            isDisabled={data.reportado > 0}
+            colorScheme="red"
+            onClick={onOpen}
+          >
+            Reportar
+          </Button>
+        </HStack>
+      </DisplayEvento>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Nuevo reporte</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Textarea
+              placeholder="Escribe cual es el motivo de tu reporte"
+              value={descripcion}
+              onChange={handleOnChangeText}
+            />
+            <Text fontSize="xs">
+              caracteres restantes: {128 - descripcion.length}
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              Close
+            </Button>
+            <Button colorScheme="blue" mr={3} onClick={handleOnClickEnviar}>
+              Enviar
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
