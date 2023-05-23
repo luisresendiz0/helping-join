@@ -1,6 +1,7 @@
+import Evento from "../../types/Evento";
 import { Query } from "../../types/Query";
 
-export const searchEvents = async (query: Query) => {
+export const searchEvents = async (query: Query): Promise<Evento[]> => {
   const url = `${import.meta.env.VITE_API_URL}/api/search`;
 
   try {
