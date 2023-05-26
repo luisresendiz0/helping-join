@@ -61,34 +61,42 @@ const ProfileScreen = () => {
         p={8}
         templateColumns="repeat(4, 1fr)"
       >
-        <GridItem colSpan={1}>
-          <Avatar
-            size="2xl"
-            name={userQuery.data?.nombre}
-            src={userQuery.data?.imagen}
-            bg="pink.100"
-          />
+        <GridItem colSpan={[4, 1]}>
+          <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+            <Avatar
+              size="2xl"
+              name={userQuery.data?.nombre}
+              src={userQuery.data?.imagen}
+              bg="pink.100"
+            />
+          </Box>
         </GridItem>
-        <GridItem colSpan={3}>
-          <Heading size="md" mb={2}>
-            {userQuery.data?.nombre}
-          </Heading>
-          <Text mb={8} color="blue.500">
-            {userQuery.data?.email}
-          </Text>
+        <GridItem colSpan={[4, 3]}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems={["center", "flex-start"]}
+          >
+            <Heading size="md" mb={2} textAlign="center">
+              {userQuery.data?.nombre}
+            </Heading>
+            <Text mb={8} color="blue.500">
+              {userQuery.data?.email}
+            </Text>
+          </Box>
           <HStack mt={8}>
             <EditarPerfilModal voluntario={userQuery.data as Voluntario} />
             <EditarPasswordModal voluntarioId={user.id_voluntario} />
           </HStack>
         </GridItem>
       </Grid>
-      <SimpleGrid spacing={40} columns={2}>
+      <SimpleGrid spacing={20} columns={[1, 2]}>
         <Box>
           <Heading mb={8} size="lg">
             Eventos de interes ⭐
           </Heading>
           {eventosInteresQuery.data && (
-            <SimpleGrid columns={2} spacing={10} w="full" h="container.sm">
+            <SimpleGrid columns={2} spacing={[4, 8]} w="full">
               {eventosInteresQuery.data.map((evento) => (
                 <Box
                   key={evento.id_evento}

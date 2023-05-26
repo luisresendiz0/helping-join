@@ -231,7 +231,7 @@ const SignInScreen = () => {
           <Flex justify="center">
             <Button
               onClick={handleSubmit(handleOnSubmit)}
-              colorScheme="blue"
+              colorScheme="pink"
               isLoading={loading}
               loadingText="Iniciando sesion..."
             >
@@ -240,7 +240,7 @@ const SignInScreen = () => {
           </Flex>
           <Text mt={12}>
             Aun no tiene una cuenta?{" "}
-            <Link as={RLink} color="blue.500" to="/signup">
+            <Link as={RLink} color="pink.500" to="/signup">
               Regístrese
             </Link>
           </Text>

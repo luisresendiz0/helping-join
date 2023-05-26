@@ -50,7 +50,7 @@ const RecommendationsScreen = () => {
   return (
     <Box>
       <Heading mb={8}>Recomendaciones</Heading>
-      <SimpleGrid columns={4} spacing={8} w="full" h="container.sm">
+      <SimpleGrid columns={[1, 4]} spacing={8} w="full">
         {recomendations.map((recomendation) => {
           return (
             <Box

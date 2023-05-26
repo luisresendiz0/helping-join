@@ -1,3 +1,4 @@
+import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, Grid, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +37,9 @@ const MobileMenu = (props: MobileMenuProps) => {
       backgroundColor="white"
       zIndex="100"
     >
+      <Flex p={4} onClick={() => props.setShowDrawer(false)}>
+        <CloseIcon />
+      </Flex>
       <Grid>
         {menuItems[props.userType as keyof typeof menuItems].map((item) => (
           <Flex

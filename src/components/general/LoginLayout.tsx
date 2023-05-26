@@ -17,7 +17,12 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
       templateRows="repeat(12, 1fr)"
       templateColumns="repeat(12, 1fr)"
     >
-      <GridItem colSpan={12} borderBottom="1px solid" borderColor="pink.300">
+      <GridItem
+        colSpan={12}
+        borderBottom="1px solid"
+        borderColor="pink.300"
+        padding={4}
+      >
         <Flex
           direction="row"
           justify="flex-start"
@@ -48,7 +53,7 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
           }}
         />
       </GridItem> */}
-      <GridItem rowSpan={11} colSpan={12} p={8}>
+      <GridItem colSpan={12} p={8}>
         {props.children}
       </GridItem>
     </Grid>

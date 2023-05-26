@@ -38,7 +38,7 @@ const DisplayEvento: FunctionComponent<
         templateColumns="repeat(6, 1fr)"
         gap={4}
       >
-        <GridItem colSpan={4} rowSpan={2}>
+        <GridItem colSpan={[6, 4]} rowSpan={2}>
           <Heading size="lg" mb={4}>
             {props.evento.nombre}
           </Heading>
@@ -46,7 +46,7 @@ const DisplayEvento: FunctionComponent<
 
           <Image src={props.evento.imagen} alt={props.evento.nombre} />
         </GridItem>
-        <GridItem colSpan={2}>
+        <GridItem colSpan={[6, 2]}>
           <LocationMap currentAddress={currentDirection} cp={cp} />
           <Box mt={4}>
             <Text as="b">Fecha inicio: </Text>
@@ -69,7 +69,7 @@ const DisplayEvento: FunctionComponent<
             <Text>{props.evento.interesados}</Text>
           </Box>
         </GridItem>
-        <GridItem colSpan={2}>{props.children}</GridItem>
+        <GridItem colSpan={[6, 2]}>{props.children}</GridItem>
       </Grid>
     </Box>
   );

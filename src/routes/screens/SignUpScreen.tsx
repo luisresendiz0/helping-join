@@ -55,9 +55,8 @@ import firebaseUserAtom from "../../atoms/firebaseUserAtom";
 const Card: FunctionComponent<PropsWithChildren> = (props) => {
   return (
     <Flex
-      w="96%"
+      w="100%"
       maxW="450px"
-      height="100%"
       border="1px solid"
       borderColor="pink.300"
       borderRadius={8}
@@ -336,7 +335,7 @@ const SignUpScreen = () => {
                     value={userType}
                     onChange={(nextValue) => setUserType(nextValue)}
                   >
-                    <HStack spacing="24px">
+                    <Stack spacing="24px" direction={["column", "row"]}>
                       <Radio value="organizacion">
                         <Tooltip
                           label="Organización de beneficencia sin fines de lucro"
@@ -361,7 +360,7 @@ const SignUpScreen = () => {
                           Voluntario
                         </Tooltip>
                       </Radio>
-                    </HStack>
+                    </Stack>
                   </RadioGroup>
                 </FormControl>
                 <FormControl
@@ -473,7 +472,7 @@ const SignUpScreen = () => {
                 </FormControl>
               </VStack>
             </Box>
-            <Flex justify="space-between" align="center">
+            <Flex justify="space-between" align="center" mt={4}>
               <Text>
                 Ya tiene una cuenta?{" "}
                 <Link color="pink.500" as={RLink} to="/signin">
@@ -631,8 +630,8 @@ const SignUpScreen = () => {
                 )}
               </FormControl>
             </VStack>
-            <Flex justify="space-between">
-              <Button colorScheme="pink" onClick={() => setStep(0)}>
+            <Flex justify="space-between" mt={4}>
+              <Button variant="outline" onClick={() => setStep(0)}>
                 Atras
               </Button>
               <Button
@@ -666,7 +665,7 @@ const SignUpScreen = () => {
                               categoria.id_categoria
                             )
                               ? "pink"
-                              : "pink"
+                              : "gray"
                           }
                           onClick={() =>
                             toggleBeneficiadoCategoria(categoria.id_categoria)
@@ -703,8 +702,8 @@ const SignUpScreen = () => {
                 )}
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button colorScheme="pink" onClick={() => setStep(1)}>
+            <Flex justify="space-between" mt={4}>
+              <Button onClick={() => setStep(1)} variant="outline">
                 Atras
               </Button>
               {isOrganizacion || isCivil ? (
@@ -759,8 +758,10 @@ const SignUpScreen = () => {
                 </Stack>
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
+            <Flex justify="space-between" mt={4}>
+              <Button onClick={() => setStep((s) => s - 1)} variant="outline">
+                Atras
+              </Button>
               <Button
                 colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
@@ -803,8 +804,10 @@ const SignUpScreen = () => {
                 </Stack>
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
+            <Flex justify="space-between" mt={4}>
+              <Button onClick={() => setStep((s) => s - 1)} variant="outline">
+                Atras
+              </Button>
               <Button
                 colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
@@ -847,8 +850,10 @@ const SignUpScreen = () => {
                 </Stack>
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
+            <Flex justify="space-between" mt={4}>
+              <Button onClick={() => setStep((s) => s - 1)} variant="outline">
+                Atras
+              </Button>
               <Button
                 colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
@@ -891,8 +896,10 @@ const SignUpScreen = () => {
                 </Stack>
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
+            <Flex justify="space-between" mt={4}>
+              <Button onClick={() => setStep((s) => s - 1)} variant="outline">
+                Atras
+              </Button>
               <Button
                 colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
@@ -935,8 +942,10 @@ const SignUpScreen = () => {
                 </Stack>
               </Box>
             </VStack>
-            <Flex justify="space-between">
-              <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
+            <Flex justify="space-between" mt={4}>
+              <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
+                Atras
+              </Button>
               <Button
                 isLoading={loading}
                 colorScheme="pink"

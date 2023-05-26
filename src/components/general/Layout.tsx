@@ -85,7 +85,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
       </GridItem>
       <GridItem
         rowSpan={11}
-        colSpan={2}
+        colSpan={[0, 2]}
         borderRight="1px solid"
         borderColor="pink.300"
         display={{
@@ -133,7 +133,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
       </GridItem>
       <GridItem
         rowSpan={11}
-        colSpan={10}
+        colSpan={[12, 10]}
         bg="white"
         p={location.pathname === "/buscar" ? 0 : 8}
         overflowY="scroll"
