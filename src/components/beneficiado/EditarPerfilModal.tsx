@@ -26,7 +26,7 @@ const EditarPerfilModal: FunctionComponent<
     <>
       <Button onClick={onOpen}>Editar perfil</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="3xl">
+      <Modal isOpen={isOpen} onClose={onClose} size={["full", "3xl"]}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Editar perfil</ModalHeader>

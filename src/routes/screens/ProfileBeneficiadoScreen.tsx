@@ -9,6 +9,7 @@ import {
   Heading,
   Image,
   SimpleGrid,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import profile from "../../assets/profile1.webp";
@@ -46,15 +47,16 @@ const ProfileBeneficiadoScreen = () => {
         p={8}
         templateColumns="repeat(4, 1fr)"
       >
-        <GridItem colSpan={1}>
+        <GridItem colSpan={[4, 1]}>
           <Avatar
             size="2xl"
             name={user.nombre}
             src={user.imagen}
             bg="pink.100"
+            mb={4}
           />
         </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={[4, 3]}>
           <Text fontSize="sm">Nombre de la organizacion</Text>
           <Heading size="md" mb={4}>
             {user.nombre}
@@ -65,12 +67,12 @@ const ProfileBeneficiadoScreen = () => {
           </Text>
           <Text fontSize="sm">Descripcion</Text>
           <Text>{user.descripcion}</Text>
-          <HStack mt={8}>
+          <Stack mt={8} wrap="wrap">
             <CreateEventoModal beneficiadoId={user.id_beneficiado} />
             <EditarPerfilModal beneficiado={user} />
             <UpdatePasswordModal beneficiadoId={user.id_beneficiado} />
             <EliminarCuentaModal beneficiadoId={user.id_beneficiado} />
-          </HStack>
+          </Stack>
         </GridItem>
       </Grid>
       <Heading mb={8} size="lg">
@@ -82,7 +84,7 @@ const ProfileBeneficiadoScreen = () => {
           uno.
         </Text>
       ) : (
-        <SimpleGrid columns={4} spacing={10} w="full" h="container.sm">
+        <SimpleGrid columns={[1, 4]} spacing={10} w="full" h="container.sm">
           {query.data?.map((evento) => (
             <Box
               key={evento.id_evento}

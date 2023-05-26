@@ -78,7 +78,7 @@ const EditarPerfilForm: FunctionComponent<
   };
 
   return (
-    <Box>
+    <Box flex={1}>
       <VStack spacing={4} mb={4}>
         <FormControl isInvalid={errors.nombre ? true : false}>
           <FormLabel>Nombre de la organizacion</FormLabel>

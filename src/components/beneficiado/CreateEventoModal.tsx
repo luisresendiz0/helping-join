@@ -27,7 +27,7 @@ const CreateEventoModal: FunctionComponent<
         Crear evento
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onClose} size={["full", "xl"]}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Crear nuevo evento</ModalHeader>

@@ -264,7 +264,7 @@ const ReportesScreen = () => {
                             handleOnClickEliminarCuenta(reporte.id_beneficiado)
                           }
                         >
-                          Eliminar cuenta {reporte.id_beneficiado}
+                          Eliminar cuenta
                         </Button>
                       </Stack>
                     </Td>

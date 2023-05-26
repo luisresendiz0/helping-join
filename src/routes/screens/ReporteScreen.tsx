@@ -24,7 +24,7 @@ const ReporteScreen = () => {
   return (
     <Box>
       <DisplayEvento evento={evento.data} />
-      <SimpleGrid columns={3} spacing={4} mt={4}>
+      <SimpleGrid columns={[1, 3]} spacing={4} mt={4}>
         {reportes.data.map((reporte) => (
           <Box
             key={reporte.id_reporte}
