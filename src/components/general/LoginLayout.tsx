@@ -30,14 +30,14 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
           <Heading pl={4}>Helping Join</Heading>
         </Flex>
       </GridItem>
-      <GridItem
+      {/* <GridItem
         rowSpan={11}
         colSpan={6}
         borderRight="1px solid"
         borderColor="pink.300"
         bg="pink.100"
       >
-        {/* <Image
+        <Image
           src={pattern}
           style={{
             backgroundSize: "cover",
@@ -46,9 +46,9 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
             width: "100%",
             height: "100%",
           }}
-        /> */}
-      </GridItem>
-      <GridItem rowSpan={11} colSpan={6} bg="white" p={8}>
+        />
+      </GridItem> */}
+      <GridItem rowSpan={11} colSpan={12} p={8}>
         {props.children}
       </GridItem>
     </Grid>

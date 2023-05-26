@@ -17,6 +17,7 @@ import {
   Tag,
   TagLabel,
   Text,
+  Tooltip,
   VStack,
   Wrap,
   WrapItem,
@@ -63,6 +64,7 @@ const Card: FunctionComponent<PropsWithChildren> = (props) => {
       padding="8"
       justify="space-between"
       flexDirection="column"
+      backgroundColor="white"
     >
       {props.children}
     </Flex>
@@ -311,7 +313,12 @@ const SignUpScreen = () => {
 
   return (
     <LoginLayout>
-      <Box h="10%">
+      <Box
+        h="10%"
+        display="flex"
+        flexDirection={"row"}
+        justifyContent={"center"}
+      >
         <Heading>Registrarse</Heading>
       </Box>
       <Flex justify="center" align="center" h="90%">
@@ -330,14 +337,32 @@ const SignUpScreen = () => {
                     onChange={(nextValue) => setUserType(nextValue)}
                   >
                     <HStack spacing="24px">
-                      <Radio value="organizacion">Organizacion</Radio>
-                      <Radio value="civil">Independiente</Radio>
-                      <Radio value="voluntario">Voluntario</Radio>
+                      <Radio value="organizacion">
+                        <Tooltip
+                          label="Organización de beneficencia sin fines de lucro"
+                          aria-label="A tooltip"
+                        >
+                          Organización
+                        </Tooltip>
+                      </Radio>
+                      <Radio value="civil">
+                        <Tooltip
+                          label="Persona interesada en crear eventos de ayuda pero no pertenece a una organización"
+                          aria-label="A tooltip"
+                        >
+                          Independiente
+                        </Tooltip>
+                      </Radio>
+                      <Radio value="voluntario">
+                        <Tooltip
+                          label="Persona interesada en brindar su ayuda a traves de eventos"
+                          aria-label="A tooltip"
+                        >
+                          Voluntario
+                        </Tooltip>
+                      </Radio>
                     </HStack>
                   </RadioGroup>
-                  <FormHelperText>
-                    Selecciona que tipo de usuario eres
-                  </FormHelperText>
                 </FormControl>
                 <FormControl
                   isInvalid={errors.fullname ? true : false}
@@ -451,12 +476,12 @@ const SignUpScreen = () => {
             <Flex justify="space-between" align="center">
               <Text>
                 Ya tiene una cuenta?{" "}
-                <Link color="blue.500" as={RLink} to="/signin">
+                <Link color="pink.500" as={RLink} to="/signin">
                   Iniciar sesion
                 </Link>
               </Text>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep(1))}
               >
                 Continuar
@@ -607,11 +632,11 @@ const SignUpScreen = () => {
               </FormControl>
             </VStack>
             <Flex justify="space-between">
-              <Button colorScheme="blue" onClick={() => setStep(0)}>
+              <Button colorScheme="pink" onClick={() => setStep(0)}>
                 Atras
               </Button>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep(2))}
               >
                 Continuar
@@ -640,7 +665,7 @@ const SignUpScreen = () => {
                             beneficiadoCategorias.includes(
                               categoria.id_categoria
                             )
-                              ? "blue"
+                              ? "pink"
                               : "pink"
                           }
                           onClick={() =>
@@ -679,20 +704,20 @@ const SignUpScreen = () => {
               </Box>
             </VStack>
             <Flex justify="space-between">
-              <Button colorScheme="blue" onClick={() => setStep(1)}>
+              <Button colorScheme="pink" onClick={() => setStep(1)}>
                 Atras
               </Button>
               {isOrganizacion || isCivil ? (
                 <Button
                   isLoading={loading}
-                  colorScheme="blue"
+                  colorScheme="pink"
                   onClick={handleSubmit(onSubmit)}
                 >
                   Registrarse
                 </Button>
               ) : (
                 <Button
-                  colorScheme="blue"
+                  colorScheme="pink"
                   onClick={handleSubmit(() => setStep(3))}
                 >
                   Continuar
@@ -737,7 +762,7 @@ const SignUpScreen = () => {
             <Flex justify="space-between">
               <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -781,7 +806,7 @@ const SignUpScreen = () => {
             <Flex justify="space-between">
               <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -825,7 +850,7 @@ const SignUpScreen = () => {
             <Flex justify="space-between">
               <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -869,7 +894,7 @@ const SignUpScreen = () => {
             <Flex justify="space-between">
               <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
               <Button
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -914,7 +939,7 @@ const SignUpScreen = () => {
               <Button onClick={() => setStep((s) => s - 1)}>Atras</Button>
               <Button
                 isLoading={loading}
-                colorScheme="blue"
+                colorScheme="pink"
                 onClick={handleSubmit(onSubmit)}
               >
                 Registrarse

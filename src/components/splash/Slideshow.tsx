@@ -40,7 +40,11 @@ const slideImages = [
   },
 ];
 
-const Slideshow = () => {
+interface SlideshowProps {
+  objetivoRef: React.RefObject<HTMLDivElement>;
+}
+
+const Slideshow = (props: SlideshowProps) => {
   const navigate = useNavigate();
 
   return (
@@ -88,6 +92,11 @@ const Slideshow = () => {
                         _hover={{ color: "white" }}
                         size="lg"
                         variant="outline"
+                        onClick={() =>
+                          props.objetivoRef.current?.scrollIntoView({
+                            behavior: "smooth",
+                          })
+                        }
                       >
                         Conoce más
                       </Button>
