@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -11,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import profile from "../../assets/profile1.webp";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import userAtom from "../../atoms/userAtom";
 import Voluntario from "../../types/Voluntario";
 import { useQuery } from "react-query";
@@ -19,9 +20,16 @@ import { getEventosInteres } from "../../services/api/getEventosInteres";
 import Evento from "../../types/Evento";
 import { format } from "date-fns";
 import { getPastEventosInteres } from "../../services/api/getPastEventosInteres";
+import EditarPerfilModal from "../../components/voluntario/EditarPerfilModal";
+import { getVountarioById } from "../../services/api/getVoluntarioById";
+import EditarPasswordModal from "../../components/voluntario/EditarPasswordModal";
+import { useNavigate } from "react-router-dom";
 
 const ProfileScreen = () => {
   const userFromAtom = useAtomValue(userAtom);
+  const setUser = useSetAtom(userAtom);
+  const navigate = useNavigate();
+
   const user = userFromAtom as Voluntario;
 
   const eventosInteresQuery = useQuery<Evento[]>("eventosInteres", () =>
@@ -32,6 +40,15 @@ const ProfileScreen = () => {
     "eventosPasadosInteres",
     () => getPastEventosInteres(user.id_voluntario)
   );
+
+  const userQuery = useQuery<Voluntario>("userData", () => getUserData());
+
+  const getUserData = async () => {
+    const data = await getVountarioById(user.id_voluntario);
+    setUser(data.data);
+    localStorage.setItem("user", JSON.stringify(data.data));
+    return data.data as Voluntario;
+  };
 
   return (
     <Box>
@@ -45,25 +62,23 @@ const ProfileScreen = () => {
         templateColumns="repeat(4, 1fr)"
       >
         <GridItem colSpan={1}>
-          <Image src={profile} rounded="full" w={250} h={250} />
+          <Avatar
+            size="2xl"
+            name={userQuery.data?.nombre}
+            src={userQuery.data?.imagen}
+            bg="pink.100"
+          />
         </GridItem>
         <GridItem colSpan={3}>
           <Heading size="md" mb={2}>
-            {user.nombre}
+            {userQuery.data?.nombre}
           </Heading>
           <Text mb={8} color="blue.500">
-            {user.email}
-          </Text>
-          <Text>
-            Como alguien que se preocupa profundamente por la gente que me
-            rodea, encuentro una gran satisfacción al ayudar a aquellos que más
-            lo necesitan. Para mí, es importante ser empático y tratar a los
-            demás con respeto y compasión, independientemente de sus
-            antecedentes o circunstancias.
+            {userQuery.data?.email}
           </Text>
           <HStack mt={8}>
-            <Button>Editar perfil</Button>
-            <Button>Cambiar contraseña</Button>
+            <EditarPerfilModal voluntario={userQuery.data as Voluntario} />
+            <EditarPasswordModal voluntarioId={user.id_voluntario} />
           </HStack>
         </GridItem>
       </Grid>
@@ -83,6 +98,7 @@ const ProfileScreen = () => {
                   borderStyle="solid"
                   borderRadius={8}
                   p={4}
+                  onClick={() => navigate(`/eventos/${evento.id_evento}`)}
                 >
                   <Text fontWeight="bold">{evento.nombre}</Text>
                   <Text>
@@ -112,12 +128,14 @@ const ProfileScreen = () => {
             <SimpleGrid columns={2} spacing={10} w="full" h="container.sm">
               {eventosPasadosInteresQuery.data.map((evento) => (
                 <Box
+                  key={evento.id_evento}
                   h={200}
                   borderColor="pink.300"
                   borderWidth={1}
                   borderStyle="solid"
                   borderRadius={8}
                   p={4}
+                  onClick={() => navigate(`/eventos/${evento.id_evento}`)}
                 >
                   <Text fontWeight="bold">{evento.nombre}</Text>
                   <Text>

@@ -13,10 +13,12 @@ import ReporteScreen from "./screens/ReporteScreen";
 import ProfileBeneficiadoScreen from "./screens/ProfileBeneficiadoScreen";
 import UpdatePasswordModeradorScreen from "./screens/UpdateModeradorPasswordScreen";
 import EventoBeneficiadoScreen from "./screens/EventoBeneficiadoScreen";
+import SplashScreen from "./screens/SplashScreen";
 
 export default () => {
   return (
     <Routes>
+      <Route path="/" element={<SplashScreen />} />
       <Route path="signin" element={<SignInScreen />} />
       <Route path="signup" element={<SignUpScreen />} />
       <Route

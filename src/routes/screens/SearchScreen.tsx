@@ -22,7 +22,11 @@ import {
   SimpleGrid,
   Stack,
   StackDivider,
+  Tag,
+  Text,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -31,11 +35,17 @@ import { Controller, useForm } from "react-hook-form";
 import { getCategorias } from "../../services/api/getCaegorias";
 import Categoria from "../../types/Categoria";
 import estados from "../../utils/estados.json";
+import { format } from "date-fns";
+import EventoItem from "../../components/eventos/EventoItem";
+import { useNavigate } from "react-router-dom";
+import Beneficiado from "../../types/Beneficiado";
+import Evento from "../../types/Evento";
+import isBeneficiadoArray from "../../utils/isBeneficiadoArray";
 
 interface Inputs {
   text: string;
   type: string;
-  categoryId: string;
+  category: string;
   fecha_inicio: string;
   fecha_fin: string;
   alcaldia: string;
@@ -43,9 +53,15 @@ interface Inputs {
 
 const SearchScreen = () => {
   const [isFetching, setIsFetching] = useState(false);
-  const [resultados, setResultados] = useState<any[]>([]);
+  const [resultados, setResultados] = useState<Evento[] | Beneficiado[]>([]);
 
-  const { register, handleSubmit, control } = useForm<Inputs>();
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, control, watch } = useForm<Inputs>();
+  const category = watch("category");
+  const fechaInicio = watch("fecha_inicio");
+  const fechaFin = watch("fecha_fin");
+  const alcaldia = watch("alcaldia");
 
   const categoriesQuery = useQuery(["categories"], async () => {
     const result = await getCategorias();
@@ -67,6 +83,63 @@ const SearchScreen = () => {
     } finally {
       setIsFetching(false);
     }
+  };
+
+  const filterBeneficiados = (array: any[]) => {
+    const beneficiados = [...array] as Beneficiado[];
+
+    return beneficiados.filter((beneficiado) => {
+      // if (category.length > 0 && beneficiado.categories.includes(category)) {
+      //   return true;
+      // }
+
+      if (alcaldia.length > 0 && beneficiado.alcaldia === alcaldia) {
+        return true;
+      }
+
+      return false;
+    });
+  };
+
+  const filterEventos = (array: any[]) => {
+    console.log(category, alcaldia, fechaInicio, fechaFin);
+    interface EventoWithCategorias extends Evento {
+      categorias: string;
+    }
+
+    const eventos = [...array] as EventoWithCategorias[];
+
+    return eventos.filter((evento) => {
+      const ok: boolean[] = [];
+      if (
+        category.length === 0 ||
+        evento.categorias
+          .split(", ")
+          .map((c) => c.split(":")[1])
+          .includes(category)
+      ) {
+        ok.push(true);
+      }
+
+      if (alcaldia.length === 0 || evento.alcaldia === alcaldia) {
+        ok.push(true);
+      }
+
+      if (fechaInicio && fechaFin) {
+        const fechaInicioDate = new Date(fechaInicio);
+        const fechaFinDate = new Date(fechaFin);
+        const fechaEventoDate = new Date(evento.fecha_inicio);
+
+        if (
+          fechaEventoDate.getTime() >= fechaInicioDate.getTime() &&
+          fechaEventoDate.getTime() <= fechaFinDate.getTime()
+        ) {
+          ok.push(true);
+        }
+      }
+
+      return ok.length >= 2;
+    }) as Evento[];
   };
 
   return (
@@ -101,17 +174,24 @@ const SearchScreen = () => {
           )}
         </Box>
 
-        <SimpleGrid columns={3} spacing={10} w="full">
-          {/* <Box
-            w="100%"
-            h="200px"
-            borderColor="pink.300"
-            borderWidth={1}
-            borderStyle="solid"
-            borderRadius={8}
-          /> */}
-          <pre>{JSON.stringify(resultados, null, 2)}</pre>
-        </SimpleGrid>
+        {resultados ? (
+          <SimpleGrid columns={3} spacing={10} w="full">
+            {isBeneficiadoArray(resultados)
+              ? filterBeneficiados(resultados).map((beneficiado, i) => {
+                  return <Text key={i}>{beneficiado.nombre}</Text>;
+                })
+              : filterEventos(resultados).map((item, i) => {
+                  const evento = item as Evento;
+                  return (
+                    <EventoItem
+                      key={i}
+                      evento={evento}
+                      onClick={() => navigate(`/eventos/${evento.id_evento}`)}
+                    />
+                  );
+                })}
+          </SimpleGrid>
+        ) : null}
       </GridItem>
       <GridItem
         rowSpan={11}
@@ -144,12 +224,9 @@ const SearchScreen = () => {
 
           <FormControl>
             <FormLabel>Categoria</FormLabel>
-            <Select placeholder="Categoria" {...register("categoryId")}>
+            <Select placeholder="Categoria" {...register("category")}>
               {categoriesQuery.data?.map((category) => (
-                <option
-                  key={category.id_categoria}
-                  value={category.id_categoria.toString()}
-                >
+                <option key={category.id_categoria} value={category.nombre}>
                   {category.nombre}
                 </option>
               ))}
@@ -169,7 +246,9 @@ const SearchScreen = () => {
             <FormControl>
               <FormLabel>Fecha de fin</FormLabel>
               <Input
-                defaultValue={new Date().toISOString().slice(0, -5)}
+                defaultValue={new Date(new Date().getTime() + 36000 * 20000)
+                  .toISOString()
+                  .slice(0, -5)}
                 {...register("fecha_fin")}
                 placeholder="Fecha de fin"
                 size="md"

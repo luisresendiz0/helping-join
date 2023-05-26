@@ -17,6 +17,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useLocation, useNavigate } from "react-router-dom";
 import userAtom from "../../atoms/userAtom";
 import tokenAtom from "../../atoms/tokenAtom";
+import MobileMenu from "./MobileMenu";
 
 const menuItems = {
   voluntario: [
@@ -34,6 +35,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
   const [user, setUser] = useAtom(userAtom);
   const [token, setToken] = useAtom(tokenAtom);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const closeSession = () => {
     setUser(null);
@@ -58,6 +60,12 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
       templateRows="repeat(12, 1fr)"
       templateColumns="repeat(12, 1fr)"
     >
+      <MobileMenu
+        closeSession={closeSession}
+        userType={userType}
+        showDrawer={showDrawer}
+        setShowDrawer={setShowDrawer}
+      />
       <GridItem colSpan={12} borderBottom="1px solid" borderColor="pink.300">
         <Flex
           direction="row"
@@ -67,7 +75,11 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
           h="full"
           paddingLeft={4}
         >
-          <IconButton aria-label="Open drawer" icon={<HamburgerIcon />} />
+          <IconButton
+            aria-label="Open drawer"
+            icon={<HamburgerIcon />}
+            onClick={() => setShowDrawer((prev) => !prev)}
+          />
           <Heading pl={4}>Helping Join</Heading>
         </Flex>
       </GridItem>
@@ -76,6 +88,10 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
         colSpan={2}
         borderRight="1px solid"
         borderColor="pink.300"
+        display={{
+          base: "none",
+          md: "block",
+        }}
       >
         {menuItems[userType].map((item) => (
           <Flex

@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { FunctionComponent, PropsWithChildren } from "react";
 import Routes from "./routes/Routes";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 

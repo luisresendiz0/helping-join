@@ -14,8 +14,6 @@ const ProtectedRoute: FunctionComponent<PropsWithChildren> = (props) => {
   const user = useAtomValue(userAtom);
   const setUser = useSetAtom(userAtom);
   const setToken = useSetAtom(tokenAtom);
-  const setFirebaseUser = useSetAtom(firebaseUserAtom);
-  const toast = useToast();
 
   useEffect(() => {
     const findTokenAndRecoversUser = async () => {
@@ -39,29 +37,8 @@ const ProtectedRoute: FunctionComponent<PropsWithChildren> = (props) => {
     findTokenAndRecoversUser();
   }, []);
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setFirebaseUser(user);
-        if (!user.emailVerified) {
-          toast.closeAll({
-            positions: ["top-right"],
-          });
-          toast({
-            description: "Verifica tu correo electronico",
-            status: "warning",
-            duration: null,
-            position: "top-right",
-          });
-        }
-      }
-    });
-
-    return unsub;
-  }, []);
-
   if (!user) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <>{props.children}</>;
