@@ -1,10 +1,6 @@
 import { Fade, Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 
-import slide1 from "../../assets/slides/slide1.jpg";
-import slide2 from "../../assets/slides/slide2.jpg";
-import slide3 from "../../assets/slides/slide3.jpg";
-import slide4 from "../../assets/slides/slide4.jpg";
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,23 +14,23 @@ const divStyle = {
 
 const slideImages = [
   {
-    url: slide1,
+    url: "/slides/slide1.jpg",
     caption: "Helping join!",
     subtitle: "Sonrisas a quien más lo necesita",
   },
   {
-    url: slide2,
+    url: "/slides/slide2.jpg",
     caption: "Helping join!",
     subtitle:
       "Conecta con organizaciones de beneficencia y ayuda a los que más lo necesitan",
   },
   {
-    url: slide3,
+    url: "/slides/slide3.jpg",
     caption: "Helping join!",
     subtitle: "Participa en eventos y actividades de beneficencia",
   },
   {
-    url: slide4,
+    url: "/slides/slide4.jpg",
     caption: "Helping join!",
     subtitle: "Conoce a personas que comparten tus mismos intereses",
   },
