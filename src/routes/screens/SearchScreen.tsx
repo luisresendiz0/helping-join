@@ -51,13 +51,13 @@ interface Inputs {
   alcaldia: string;
 }
 
+type OrderType = "nombre" | "fecha_inicio";
+
 const SearchScreen = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [resultados, setResultados] = useState<Evento[] | Beneficiado[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [orderType, setOrderType] = useState<"nombre" | "fecha_inicio">(
-    "nombre"
-  );
+  const [orderType, setOrderType] = useState<OrderType>("nombre");
 
   const navigate = useNavigate();
 
@@ -199,10 +199,10 @@ const SearchScreen = () => {
               w={200}
               mr={4}
               value={orderType}
-              onChange={(e) => setOrderType(e.target.value)}
+              onChange={(e) => setOrderType(e.target.value as OrderType)}
             >
               <option value="nombre">Nombre</option>
-              <option value="fecha">Fecha de inicio</option>
+              <option value="fecha_inicio">Fecha de inicio</option>
             </Select>
             {isFetching && (
               <CircularProgress isIndeterminate color="pink.500" size="25px" />
