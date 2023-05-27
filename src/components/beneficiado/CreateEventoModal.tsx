@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 import CreateEventoForm from "./CreateEventoForm";
 import { FunctionComponent, PropsWithChildren } from "react";
+import { useAtomValue } from "jotai";
+import userAtom from "../../atoms/userAtom";
 
 interface CreaseEventoModalProps {
   beneficiadoId: number;
@@ -20,10 +22,15 @@ const CreateEventoModal: FunctionComponent<
   PropsWithChildren<CreaseEventoModalProps>
 > = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = useAtomValue(userAtom);
 
   return (
     <>
-      <Button colorScheme="pink" onClick={onOpen}>
+      <Button
+        colorScheme="pink"
+        onClick={onOpen}
+        isDisabled={user?.verificado === 0}
+      >
         Crear evento
       </Button>
 

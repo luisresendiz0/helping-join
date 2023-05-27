@@ -1,5 +1,5 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { FunctionComponent, PropsWithChildren } from "react";
+import { FunctionComponent, PropsWithChildren, useState } from "react";
 import { Navigate } from "react-router-dom";
 import userAtom from "../../atoms/userAtom";
 import tokenAtom from "../../atoms/tokenAtom";
@@ -14,6 +14,7 @@ const ProtectedRoute: FunctionComponent<PropsWithChildren> = (props) => {
   const user = useAtomValue(userAtom);
   const setUser = useSetAtom(userAtom);
   const setToken = useSetAtom(tokenAtom);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const findTokenAndRecoversUser = async () => {
@@ -32,12 +33,17 @@ const ProtectedRoute: FunctionComponent<PropsWithChildren> = (props) => {
           }
         }
       }
+      setIsLoading(false);
     };
 
     findTokenAndRecoversUser();
   }, []);
 
-  if (!user) {
+  if (isLoading) {
+    return <></>;
+  }
+
+  if (!user && !isLoading) {
     return <Navigate to="/" replace />;
   }
 

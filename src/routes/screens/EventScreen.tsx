@@ -76,20 +76,26 @@ const EventScreen = () => {
       <DisplayEvento evento={data}>
         <HStack mt={4}>
           <Button
-            isDisabled={data.interesado > 0}
+            isDisabled={data.interesado > 0 || user.verificado === 0}
             colorScheme="yellow"
             onClick={() => meInteresaMutation.mutate()}
           >
             Me interesa
           </Button>
           <Button
-            isDisabled={data.reportado > 0}
+            isDisabled={data.reportado > 0 || user.verificado === 0}
             colorScheme="red"
             onClick={onOpen}
           >
             Reportar
           </Button>
         </HStack>
+        {user.verificado === 0 && (
+          <Text fontSize="xs" color="red.500">
+            Para poder interactuar con los eventos primero debes verificar tu
+            cuenta
+          </Text>
+        )}
       </DisplayEvento>
 
       <Modal isOpen={isOpen} onClose={onClose}>

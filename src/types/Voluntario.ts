@@ -12,6 +12,7 @@ interface Voluntario {
   entidad: string;
   imagen: string;
   contrasena: string;
+  verificado: 1 | 0;
 }
 
 export interface VoluntarioWithCategories extends Voluntario {

@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { FunctionComponent, PropsWithChildren } from "react";
 import UpdatePasswordForm from "./UpdatePasswordForm";
+import userAtom from "../../atoms/userAtom";
+import { useAtomValue } from "jotai";
 
 interface UpdatePasswordModalProps {
   beneficiadoId: number;
@@ -19,10 +21,13 @@ const UpdatePasswordModal: FunctionComponent<
   PropsWithChildren<UpdatePasswordModalProps>
 > = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = useAtomValue(userAtom);
 
   return (
     <>
-      <Button onClick={onOpen}>Cambiar contraseña</Button>
+      <Button onClick={onOpen} isDisabled={user?.verificado === 0}>
+        Cambiar contraseña
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

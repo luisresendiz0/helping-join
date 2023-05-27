@@ -9,8 +9,14 @@ import {
   Progress,
   Spacer,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { FunctionComponent, PropsWithChildren, useState } from "react";
+import {
+  FunctionComponent,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { drawerAtom } from "../../atoms/drawerAtom";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -33,6 +39,7 @@ const menuItems = {
 const Layout: FunctionComponent<PropsWithChildren> = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const toast = useToast();
   const [user, setUser] = useAtom(userAtom);
   const [token, setToken] = useAtom(tokenAtom);
   const [showDrawer, setShowDrawer] = useState(false);
@@ -43,6 +50,21 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
+
+  useEffect(() => {
+    if (user?.verificado === 0) {
+      toast.closeAll();
+      toast({
+        title: "Verifica tu correo para poder utilizar la plataforma",
+        status: "warning",
+        duration: null,
+        isClosable: false,
+        position: "top-right",
+      });
+    } else if (user?.verificado === 1) {
+      toast.closeAll();
+    }
+  }, [user]);
 
   const userType =
     user && Object.keys(user).includes("id_voluntario")

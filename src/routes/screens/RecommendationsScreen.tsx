@@ -14,17 +14,31 @@ import { getRecomendationsById } from "../../services/api/getRecomendationsById"
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import userAtom from "../../atoms/userAtom";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import Voluntario from "../../types/Voluntario";
+import { getVountarioById } from "../../services/api/getVoluntarioById";
 
 const RecommendationsScreen = () => {
   const userValue = useAtomValue(userAtom);
+  const setUser = useSetAtom(userAtom);
   const user = userValue as Voluntario;
 
   const [recomendations, setRecomendations] = useState<Array<Recomendation>>(
     []
   );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateUser = async () => {
+      if (userValue) {
+        const newUser = await getVountarioById(user.id_voluntario);
+        localStorage.setItem("user", JSON.stringify(newUser.data));
+        setUser(newUser.data);
+      }
+    };
+
+    updateUser();
+  }, []);
 
   useEffect(() => {
     const findRecomendations = async () => {

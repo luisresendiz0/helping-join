@@ -32,6 +32,7 @@ interface Inputs {
   facebook: string;
   instagram: string;
   twitter: string;
+  web: string;
   nombre: string;
 }
 
@@ -305,6 +306,18 @@ const EditarPerfilForm: FunctionComponent<
             )}
           </FormControl>
         </HStack>
+        <FormControl isInvalid={errors.web ? true : false}>
+          <FormLabel>Pagina web de contacto</FormLabel>
+          <Input
+            defaultValue={props.beneficiado["web" as keyof Beneficiado]}
+            type="text"
+            placeholder="Pagina web de contacto"
+            {...register("web")}
+          />
+          {errors.web && (
+            <FormErrorMessage>{errors.web.message}</FormErrorMessage>
+          )}
+        </FormControl>
         <HStack spacing={4} width="full" justify="flex-end">
           <Button
             colorScheme="pink"

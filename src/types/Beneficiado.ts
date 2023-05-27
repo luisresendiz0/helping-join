@@ -16,6 +16,11 @@ interface Beneficiado {
   responsable: string;
   telefono: string;
   tipo: string;
+  verificado: 1 | 0;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  web: string;
 }
 
 export interface BeneficiadoWithCategories extends Beneficiado {

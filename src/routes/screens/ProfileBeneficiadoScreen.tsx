@@ -8,15 +8,14 @@ import {
   HStack,
   Heading,
   Image,
+  Link,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import profile from "../../assets/profile1.webp";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import userAtom from "../../atoms/userAtom";
 import Beneficiado from "../../types/Beneficiado";
-import CreateEventoForm from "../../components/beneficiado/CreateEventoForm";
 import { useQuery } from "react-query";
 import { getEventosByBeneficiadoId } from "../../services/api/getEventosByBeneficiadoId";
 import { format } from "date-fns";
@@ -25,9 +24,13 @@ import EliminarCuentaModal from "../../components/beneficiado/EliminarCuentaModa
 import EditarPerfilModal from "../../components/beneficiado/EditarPerfilModal";
 import UpdatePasswordModal from "../../components/beneficiado/UpdatePasswordModal";
 import { useNavigate } from "react-router-dom";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
+import { getBeneficiadoById } from "../../services/api/getBeneficiadoById";
 
 const ProfileBeneficiadoScreen = () => {
   const userFromAtom = useAtomValue(userAtom);
+  const setUser = useSetAtom(userAtom);
   const user = userFromAtom as Beneficiado;
   const navigate = useNavigate();
 
@@ -35,6 +38,18 @@ const ProfileBeneficiadoScreen = () => {
     queryKey: ["eventosBeneficiado", user.id_beneficiado],
     queryFn: () => getEventosByBeneficiadoId(user.id_beneficiado),
   });
+
+  useEffect(() => {
+    const updateUser = async () => {
+      const updatedUser = await getBeneficiadoById(user.id_beneficiado);
+      if (updatedUser) {
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+      }
+    };
+
+    updateUser();
+  }, [query.data]);
 
   return (
     <Box>
@@ -67,12 +82,40 @@ const ProfileBeneficiadoScreen = () => {
           </Text>
           <Text fontSize="sm">Descripcion</Text>
           <Text>{user.descripcion}</Text>
-          <Stack mt={8} wrap="wrap" direction={["column", "row"]}>
+          <Stack my={4} wrap="wrap" direction={["column", "row"]}>
+            {user.facebook && (
+              <Link href={user.facebook} isExternal color="facebook.500">
+                Facebook <ExternalLinkIcon mx="2px" />
+              </Link>
+            )}
+            {user.twitter && (
+              <Link href={user.twitter} isExternal color="twitter.500">
+                Twitter <ExternalLinkIcon mx="2px" />
+              </Link>
+            )}
+            {user.instagram && (
+              <Link href={user.instagram} isExternal color="pink.500">
+                Instagram <ExternalLinkIcon mx="2px" />
+              </Link>
+            )}
+            {user.web && (
+              <Link href={user.web} isExternal color="pink.500">
+                Pagina web <ExternalLinkIcon mx="2px" />
+              </Link>
+            )}
+          </Stack>
+          <Stack wrap="wrap" direction={["column", "row"]}>
             <CreateEventoModal beneficiadoId={user.id_beneficiado} />
             <EditarPerfilModal beneficiado={user} />
             <UpdatePasswordModal beneficiadoId={user.id_beneficiado} />
             <EliminarCuentaModal beneficiadoId={user.id_beneficiado} />
           </Stack>
+          {user.verificado === 0 && (
+            <Text mt={2} color="red.500" fontSize="xs">
+              Tu cuenta no esta verificada, revisa tu correo electronico para
+              verificarla.
+            </Text>
+          )}
         </GridItem>
       </Grid>
       <Heading mb={8} size="lg">
