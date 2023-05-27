@@ -265,6 +265,7 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.facebook ? true : false}>
             <FormLabel>Facebook</FormLabel>
             <Input
+              defaultValue={props.beneficiado["facebook" as keyof Beneficiado]}
               type="text"
               placeholder="Facebook"
               {...register("facebook", {
@@ -278,6 +279,7 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.instagram ? true : false}>
             <FormLabel>Instagram</FormLabel>
             <Input
+              defaultValue={props.beneficiado["instagram" as keyof Beneficiado]}
               type="text"
               placeholder="Instagram"
               {...register("instagram", {
@@ -291,6 +293,7 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.twitter ? true : false}>
             <FormLabel>Twitter</FormLabel>
             <Input
+              defaultValue={props.beneficiado["twitter" as keyof Beneficiado]}
               type="text"
               placeholder="Twitter"
               {...register("twitter", {

@@ -67,7 +67,7 @@ const ProfileBeneficiadoScreen = () => {
           </Text>
           <Text fontSize="sm">Descripcion</Text>
           <Text>{user.descripcion}</Text>
-          <Stack mt={8} wrap="wrap">
+          <Stack mt={8} wrap="wrap" direction={["column", "row"]}>
             <CreateEventoModal beneficiadoId={user.id_beneficiado} />
             <EditarPerfilModal beneficiado={user} />
             <UpdatePasswordModal beneficiadoId={user.id_beneficiado} />
