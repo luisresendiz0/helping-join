@@ -185,7 +185,14 @@ const SignInScreen = () => {
   return (
     <LoginLayout>
       <Flex justify="center" align="center" w="full" h="full">
-        <Box>
+        <Box
+          borderWidth={1}
+          borderColor="pink"
+          borderRadius={8}
+          p={8}
+          width="100%"
+          maxWidth="500px"
+        >
           <Heading textAlign="center" mb={8}>
             Iniciar sesión
           </Heading>
@@ -194,9 +201,8 @@ const SignInScreen = () => {
             mb={4}
             isRequired
           >
-            <FormLabel>Correo electronico</FormLabel>
+            <FormLabel>Correo electrónico</FormLabel>
             <Input
-              w={400}
               type="email"
               {...register("email", { required: "Este campo es requerido" })}
             />
@@ -207,7 +213,7 @@ const SignInScreen = () => {
 
           <FormControl
             isInvalid={errors.password ? true : false}
-            mb={8}
+            mb={4}
             isRequired
           >
             <FormLabel>Contraseña</FormLabel>
@@ -228,6 +234,11 @@ const SignInScreen = () => {
               <FormErrorMessage>{errors.password.message}</FormErrorMessage>
             )}
           </FormControl>
+          <Flex justify="flex-end" mb={8}>
+            <Link as={RLink} color="pink.500" to="/recover-password">
+              Olvidé mi contraseña
+            </Link>
+          </Flex>
           <Flex justify="center">
             <Button
               onClick={handleSubmit(handleOnSubmit)}

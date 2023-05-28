@@ -61,11 +61,11 @@ const EditarEventoForm = (props: Props) => {
   return (
     <Box>
       <FormControl isInvalid={errors.nombre ? true : false}>
-        <FormLabel>Nombre de la organizacion</FormLabel>
+        <FormLabel>Nombre de la organización</FormLabel>
         <Input
           defaultValue={props.evento.nombre}
           type="text"
-          placeholder="Nombre de la organizacion"
+          placeholder="Nombre de la organización"
           {...register("nombre", {
             required: "Este campo es requerido",
           })}
@@ -75,11 +75,11 @@ const EditarEventoForm = (props: Props) => {
         )}
       </FormControl>
       <FormControl isInvalid={errors.descripcion ? true : false}>
-        <FormLabel>Descripcion</FormLabel>
+        <FormLabel>Descripción</FormLabel>
         <Textarea
           defaultValue={props.evento.descripcion}
           rows={5}
-          placeholder="Descripcion"
+          placeholder="Agregar una descripción"
           {...register("descripcion", {
             required: "Este campo es requerido",
           })}
@@ -135,11 +135,11 @@ const EditarEventoForm = (props: Props) => {
       </FormControl>
       <HStack spacing={4} width="full">
         <FormControl isInvalid={errors.numero_exterior ? true : false}>
-          <FormLabel>Numero exterior</FormLabel>
+          <FormLabel>Número exterior</FormLabel>
           <Input
             defaultValue={props.evento.numero_exterior}
             type="text"
-            placeholder="Numero exterior"
+            placeholder="Número exterior"
             {...register("numero_exterior", {
               required: "Este campo es requerido",
             })}
@@ -151,11 +151,11 @@ const EditarEventoForm = (props: Props) => {
           )}
         </FormControl>
         <FormControl isInvalid={errors.numero_interior ? true : false}>
-          <FormLabel>Numero interior</FormLabel>
+          <FormLabel>Número interior</FormLabel>
           <Input
             defaultValue={props.evento.numero_interior}
             type="text"
-            placeholder="Numero interior"
+            placeholder="Número interior"
             {...register("numero_interior")}
           />
           {errors.numero_interior && (
@@ -181,7 +181,7 @@ const EditarEventoForm = (props: Props) => {
           )}
         </FormControl>
         <FormControl isInvalid={errors.codigo_postal ? true : false}>
-          <FormLabel>Codigo postal</FormLabel>
+          <FormLabel>Código postal</FormLabel>
           <Input
             defaultValue={props.evento.codigo_postal}
             type="text"

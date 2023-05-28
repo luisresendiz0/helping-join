@@ -80,7 +80,7 @@ const UpdatePasswordModeradorScreen = () => {
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                   message:
-                    "La contrasena debe tener al menos 1 mayuscula, 1 minuscula y 1 numero",
+                    "La contrasena debe tener al menos 1 mayúscula, 1 minúscula y 1 número",
                 },
                 // validar que la contrasena sea distinta de "Cambiame1"
                 validate: {
@@ -106,7 +106,7 @@ const UpdatePasswordModeradorScreen = () => {
                 validate: {
                   matchesPreviousPassword: (value) => {
                     const { password } = getValues();
-                    return password === value || "Las contrasenas no coinciden";
+                    return password === value || "Las contraseñas no coinciden";
                   },
                 },
               })}

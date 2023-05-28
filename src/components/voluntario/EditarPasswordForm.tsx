@@ -48,8 +48,8 @@ const EditarPasswordForm: FunctionComponent<
       if (result.success) {
         props.onClose();
         toast({
-          title: "Contrasena actualizada",
-          description: "La contrasena se actualizo correctamente",
+          title: "Contraseña actualizada",
+          description: "La contraseña se actualizó correctamente",
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -65,7 +65,7 @@ const EditarPasswordForm: FunctionComponent<
   return (
     <VStack spacing={4} mb={4}>
       <FormControl isInvalid={errors.password ? true : false}>
-        <FormLabel>Contrasena actual</FormLabel>
+        <FormLabel>Contraseña actual</FormLabel>
         <Input
           type="text"
           {...register("password", {
@@ -77,7 +77,7 @@ const EditarPasswordForm: FunctionComponent<
         )}
       </FormControl>
       <FormControl isInvalid={errors.newPassword ? true : false}>
-        <FormLabel>Nueva contrasena</FormLabel>
+        <FormLabel>Nueva contraseña</FormLabel>
         <Input
           type="text"
           {...register("newPassword", {
@@ -86,7 +86,7 @@ const EditarPasswordForm: FunctionComponent<
             pattern: {
               value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
               message:
-                "La contrasena debe tener al menos 8 caracteres, 1 mayuscula, 1 minuscula y 1 numero",
+                "La contraseña debe tener al menos 8 caracteres, 1 mayúscula, 1 minúscula y 1 número",
             },
           })}
         />
@@ -95,7 +95,7 @@ const EditarPasswordForm: FunctionComponent<
         )}
       </FormControl>
       <FormControl isInvalid={errors.repeatNewPassword ? true : false}>
-        <FormLabel>Repetir nueva contrasena</FormLabel>
+        <FormLabel>Repetir nueva contraseña</FormLabel>
         <Input
           type="text"
           {...register("repeatNewPassword", {
@@ -123,7 +123,7 @@ const EditarPasswordForm: FunctionComponent<
           type="submit"
           onClick={handleSubmit(onSubmit)}
         >
-          Actualizar contrasena
+          Actualizar contraseña
         </Button>
       </Box>
     </VStack>

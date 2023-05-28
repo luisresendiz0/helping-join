@@ -188,6 +188,7 @@ const SignUpScreen = () => {
           imagen: "",
           contrasena: data.password,
           categorias: cats,
+          verificado: 0,
         };
         const result = await signUpVoluntario(voluntario);
         const userCredential = await createUserWithEmailAndPassword(
@@ -242,6 +243,11 @@ const SignUpScreen = () => {
           evento_eliminados: 0,
           descripcion: "",
           tipo: userType,
+          verificado: 0,
+          facebook: "",
+          instagram: "",
+          twitter: "",
+          web: "",
         };
 
         const result = await signUpBeneficiado(beneficiado);

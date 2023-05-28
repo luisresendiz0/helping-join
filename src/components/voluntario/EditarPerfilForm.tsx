@@ -67,6 +67,7 @@ const EditarPerfilForm: FunctionComponent<
         codigo_postsl: props.voluntario.codigo_postsl,
         contrasena: props.voluntario.contrasena,
         imagen: props.voluntario.imagen,
+        verificado: props.voluntario.verificado,
       };
 
       if (data.imagen.length > 0) {
@@ -98,7 +99,7 @@ const EditarPerfilForm: FunctionComponent<
           <Input
             defaultValue={props.voluntario.nombre}
             type="text"
-            placeholder="Nombre de la organizacion"
+            placeholder="Nombre completo"
             {...register("nombre", {
               required: "Este campo es requerido",
             })}

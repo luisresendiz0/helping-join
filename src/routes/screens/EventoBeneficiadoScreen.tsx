@@ -30,12 +30,12 @@ import EditarEventoModal from "../../components/beneficiado/EditarEventoModal";
 const EventoBeneficiadoScreen = () => {
   const query = useParams();
 
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getEventBeneficiadoById", Number(query.id), 1],
     queryFn: () => getEventById(Number(query.id), 1),
   });
 
-  if (isLoading || !data) return <p>Loading...</p>;
+  if (isLoading || !data) return <p>Cargando...</p>;
 
   return (
     <Box>

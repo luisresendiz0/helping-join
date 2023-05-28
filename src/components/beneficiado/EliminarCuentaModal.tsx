@@ -40,7 +40,7 @@ const EliminarCuentaModal: FunctionComponent<
 
       toast({
         title: "Cuenta eliminada",
-        description: "La cuenta se elimino correctamente",
+        description: "La cuenta se eliminó correctamente",
         status: "success",
         duration: 5000,
         isClosable: true,

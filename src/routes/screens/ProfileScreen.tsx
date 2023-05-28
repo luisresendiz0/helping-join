@@ -93,7 +93,7 @@ const ProfileScreen = () => {
       <SimpleGrid spacing={20} columns={[1, 2]}>
         <Box>
           <Heading mb={8} size="lg">
-            Eventos de interes ⭐
+            Eventos de interés ⭐
           </Heading>
           {eventosInteresQuery.data && (
             <SimpleGrid columns={2} spacing={[4, 8]} w="full">

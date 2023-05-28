@@ -72,15 +72,15 @@ const ProfileBeneficiadoScreen = () => {
           />
         </GridItem>
         <GridItem colSpan={[4, 3]}>
-          <Text fontSize="sm">Nombre de la organizacion</Text>
+          <Text fontSize="sm">Nombre de la organización</Text>
           <Heading size="md" mb={4}>
             {user.nombre}
           </Heading>
-          <Text fontSize="sm">Correo electronico</Text>
+          <Text fontSize="sm">Correo electrónico</Text>
           <Text mb={4} color="pink.500">
             {user.email}
           </Text>
-          <Text fontSize="sm">Descripcion</Text>
+          <Text fontSize="sm">Descripción</Text>
           <Text>{user.descripcion}</Text>
           <Stack my={4} wrap="wrap" direction={["column", "row"]}>
             {user.facebook && (
@@ -112,7 +112,7 @@ const ProfileBeneficiadoScreen = () => {
           </Stack>
           {user.verificado === 0 && (
             <Text mt={2} color="red.500" fontSize="xs">
-              Tu cuenta no esta verificada, revisa tu correo electronico para
+              Tu cuenta no esta verificada, revisa tu correo electrónico para
               verificarla.
             </Text>
           )}
@@ -123,7 +123,7 @@ const ProfileBeneficiadoScreen = () => {
       </Heading>
       {query.data?.length === 0 ? (
         <Text>
-          No hay eventos creados, da clic en el boton "Crear evento" para crear
+          No hay eventos creados, da clic en el botón "Crear evento" para crear
           uno.
         </Text>
       ) : (

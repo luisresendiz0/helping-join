@@ -82,7 +82,7 @@ const MobileMenu = (props: MobileMenuProps) => {
             props.closeSession();
           }}
         >
-          <Text>Cerrar sesion</Text>
+          <Text>Cerrar sesión</Text>
         </Flex>
       </Grid>
     </Box>

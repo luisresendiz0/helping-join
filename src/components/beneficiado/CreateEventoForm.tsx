@@ -186,7 +186,7 @@ const CreateEventoForm: FunctionComponent<
     <Box>
       <VStack spacing={4}>
         <FormControl>
-          <FormLabel>Titulo</FormLabel>
+          <FormLabel>Título</FormLabel>
           <Input
             isInvalid={errors.titulo ? true : false}
             type="text"
@@ -199,7 +199,7 @@ const CreateEventoForm: FunctionComponent<
           <FormLabel>Descripcion</FormLabel>
           <Textarea
             isInvalid={errors.descripcion ? true : false}
-            placeholder="Here is a sample placeholder"
+            placeholder="Agregar una descripción"
             {...register("descripcion", {
               required: true,
             })}
@@ -239,7 +239,7 @@ const CreateEventoForm: FunctionComponent<
             })}
           />
         </FormControl>
-        <Heading size="md">Ubicacion</Heading>
+        <Heading size="md">Ubicación</Heading>
         <FormControl>
           <FormLabel>Calle</FormLabel>
           <Input
@@ -251,7 +251,7 @@ const CreateEventoForm: FunctionComponent<
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Numero exterior</FormLabel>
+          <FormLabel>Número exterior</FormLabel>
           <Input
             isInvalid={errors.numero_exterior ? true : false}
             type="text"
@@ -261,7 +261,7 @@ const CreateEventoForm: FunctionComponent<
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Numero interior</FormLabel>
+          <FormLabel>Número interior</FormLabel>
           <Input
             isInvalid={errors.numero_interior ? true : false}
             type="text"
@@ -279,7 +279,7 @@ const CreateEventoForm: FunctionComponent<
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Codigo postal</FormLabel>
+          <FormLabel>Código postal</FormLabel>
           <Input
             isInvalid={errors.codigo_postal ? true : false}
             type="text"

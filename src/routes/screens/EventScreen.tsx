@@ -66,10 +66,12 @@ const EventScreen = () => {
       await createReporte(Number(query.id), 3, descripcion);
       setDescripcion("");
       onClose();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  if (isLoading || !data) return <p>Loading...</p>;
+  if (isLoading || !data) return <p>Cargando...</p>;
 
   return (
     <Box>
@@ -116,7 +118,7 @@ const EventScreen = () => {
 
           <ModalFooter>
             <Button variant="ghost" onClick={onClose}>
-              Close
+              Cancelar
             </Button>
             <Button colorScheme="blue" mr={3} onClick={handleOnClickEnviar}>
               Enviar

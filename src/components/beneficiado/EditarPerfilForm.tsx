@@ -82,11 +82,11 @@ const EditarPerfilForm: FunctionComponent<
     <Box flex={1}>
       <VStack spacing={4} mb={4}>
         <FormControl isInvalid={errors.nombre ? true : false}>
-          <FormLabel>Nombre de la organizacion</FormLabel>
+          <FormLabel>Nombre de la organización</FormLabel>
           <Input
             defaultValue={props.beneficiado.nombre}
             type="text"
-            placeholder="Nombre de la organizacion"
+            placeholder="Nombre de la organización"
             {...register("nombre", {
               required: "Este campo es requerido",
             })}
@@ -307,11 +307,11 @@ const EditarPerfilForm: FunctionComponent<
           </FormControl>
         </HStack>
         <FormControl isInvalid={errors.web ? true : false}>
-          <FormLabel>Pagina web de contacto</FormLabel>
+          <FormLabel>Página web de contacto</FormLabel>
           <Input
             defaultValue={props.beneficiado["web" as keyof Beneficiado]}
             type="text"
-            placeholder="Pagina web de contacto"
+            placeholder="Página web de contacto"
             {...register("web")}
           />
           {errors.web && (
