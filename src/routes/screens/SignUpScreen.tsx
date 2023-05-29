@@ -31,7 +31,7 @@ import {
   useEffect,
 } from "react";
 import { Navigate, Link as RLink, useNavigate } from "react-router-dom";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import categoriasAtom from "../../atoms/categoriasAtom";
 import { getCategorias } from "../../services/api/getCaegorias";
@@ -44,13 +44,6 @@ import { BeneficiadoWithCategories } from "../../types/Beneficiado";
 import { signUpBeneficiado } from "../../services/api/signUpBeneficiado";
 import userAtom from "../../atoms/userAtom";
 import tokenAtom from "../../atoms/tokenAtom";
-import { auth } from "../../services/firebase/config";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import firebaseUserAtom from "../../atoms/firebaseUserAtom";
 
 const Card: FunctionComponent<PropsWithChildren> = (props) => {
   return (
@@ -92,7 +85,6 @@ const SignUpScreen = () => {
   const user = useAtomValue(userAtom);
   const setUser = useSetAtom(userAtom);
   const setToken = useSetAtom(tokenAtom);
-  const setFirebaseUser = useSetAtom(firebaseUserAtom);
   const navigate = useNavigate();
 
   const {
@@ -191,21 +183,8 @@ const SignUpScreen = () => {
           verificado: 0,
         };
         const result = await signUpVoluntario(voluntario);
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-        if (result.success && userCredential.user) {
-          setFirebaseUser(userCredential.user);
-          localStorage.setItem(
-            "firebaseUser",
-            JSON.stringify(userCredential.user)
-          );
-          if (!userCredential.user.emailVerified) {
-            await sendEmailVerification(userCredential.user);
-          }
 
+        if (result.success) {
           toast({
             title: "Cuenta creada exitosamente",
             description:
@@ -250,24 +229,9 @@ const SignUpScreen = () => {
           web: "",
         };
 
-        console.log(beneficiado);
-
         const result = await signUpBeneficiado(beneficiado);
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
 
-        if (result.success && userCredential.user) {
-          setFirebaseUser(userCredential.user);
-          localStorage.setItem(
-            "firebaseUser",
-            JSON.stringify(userCredential.user)
-          );
-          if (!userCredential.user.emailVerified) {
-            await sendEmailVerification(userCredential.user);
-          }
+        if (result.success) {
           toast({
             title: "Cuenta creada exitosamente",
             description:
