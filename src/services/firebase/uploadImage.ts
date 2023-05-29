@@ -1,10 +1,14 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "./config";
+import { nanoid } from "nanoid";
 
 export const uploadImage = async (file: File) => {
   try {
     // Crea una referencia única para la imagen en Firebase Storage
-    const imageRef = ref(storage, `images/${file.name}`);
+    const imageRef = ref(
+      storage,
+      `images/${nanoid()}.${file.name.split(".").pop()}`
+    );
 
     // Sube la imagen a Firebase Storage
     const snapshot = await uploadBytes(imageRef, file);

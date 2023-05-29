@@ -19,6 +19,7 @@
     "framer-motion": "^10.9.1",
     "jotai": "^2.0.3",
     "mapbox-gl": "^2.13.0",
+    "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
