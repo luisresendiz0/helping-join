@@ -250,6 +250,8 @@ const SignUpScreen = () => {
           web: "",
         };
 
+        console.log(beneficiado);
+
         const result = await signUpBeneficiado(beneficiado);
         const userCredential = await createUserWithEmailAndPassword(
           auth,
