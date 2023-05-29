@@ -415,7 +415,7 @@ const SignUpScreen = () => {
                       required: "Este campo es requerido",
                       pattern: {
                         value: /\S+@\S+\.\S+/,
-                        message: "El correo electronico no es valido",
+                        message: "El correo electrónico no es válido",
                       },
                     })}
                     type="email"
@@ -428,19 +428,19 @@ const SignUpScreen = () => {
                   isInvalid={errors.password ? true : false}
                   isRequired
                 >
-                  <FormLabel>Contrasena</FormLabel>
+                  <FormLabel>Contraseña</FormLabel>
                   <Input
                     {...register("password", {
                       required: "Este campo es requerido",
                       minLength: {
                         value: 8,
                         message:
-                          "La contrasena debe tener al menos 8 caracteres",
+                          "La contraseña debe tener al menos 8 caracteres",
                       },
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                         message:
-                          "La contrasena debe tener al menos 1 mayuscula, 1 minuscula y 1 numero",
+                          "La contraseña debe tener al menos 1 mayúscula, 1 minúscula y 1 número",
                       },
                     })}
                     type="password"
@@ -456,7 +456,7 @@ const SignUpScreen = () => {
                   isInvalid={errors.passwordConfirmation ? true : false}
                   isRequired
                 >
-                  <FormLabel>Confirmar contrasena</FormLabel>
+                  <FormLabel>Confirmar contraseña</FormLabel>
                   <Input
                     {...register("passwordConfirmation", {
                       required: "Este campo es requerido",
@@ -464,7 +464,7 @@ const SignUpScreen = () => {
                         matchesPreviousPassword: (value) => {
                           const { password } = getValues();
                           return (
-                            password === value || "Las contrasenas no coinciden"
+                            password === value || "Las contraseñas no coinciden"
                           );
                         },
                       },
@@ -500,7 +500,7 @@ const SignUpScreen = () => {
         {step === 1 && (
           <Card>
             <VStack spacing={6}>
-              <Heading size="md">Direccion</Heading>
+              <Heading size="md">Dirección</Heading>
               <FormControl isInvalid={errors.calle ? true : false} isRequired>
                 <FormLabel>Calle</FormLabel>
                 <Input
@@ -595,7 +595,7 @@ const SignUpScreen = () => {
                       required: "Este campo es obligatorio",
                       pattern: {
                         value: /^\d{5}$/,
-                        message: "El codigo postal debe tener 5 digitos",
+                        message: "El código postal debe tener 5 digitos",
                       },
                     })}
                     type="number"
@@ -640,7 +640,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button variant="outline" onClick={() => setStep(0)}>
-                Atras
+                Atrás
               </Button>
               <Button
                 colorScheme="pink"
@@ -860,7 +860,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button onClick={() => setStep((s) => s - 1)} variant="outline">
-                Atras
+                Atrás
               </Button>
               <Button
                 colorScheme="pink"
@@ -906,7 +906,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button onClick={() => setStep((s) => s - 1)} variant="outline">
-                Atras
+                Atrás
               </Button>
               <Button
                 colorScheme="pink"
@@ -952,7 +952,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button variant="outline" onClick={() => setStep((s) => s - 1)}>
-                Atras
+                Atrás
               </Button>
               <Button
                 isLoading={loading}
