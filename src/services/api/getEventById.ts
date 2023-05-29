@@ -4,7 +4,7 @@ export const getEventById = async (
   eventoId: number,
   voluntarioId: number
 ): Promise<Evento> => {
-  const url = "http://localhost:4000/api/eventos/detail";
+  const url = `${import.meta.env.VITE_API_URL}/api/eventos/detail`;
 
   const params = {
     eventoId,

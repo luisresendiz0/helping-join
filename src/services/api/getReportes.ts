@@ -1,7 +1,7 @@
 import Reporte from "../../types/Reporte";
 
 export const getReportes = async (): Promise<Reporte[]> => {
-  const url = `http://localhost:4000/api/reportes`;
+  const url = `${import.meta.env.VITE_API_URL}/api/reportes`;
 
   try {
     const response = await fetch(url);

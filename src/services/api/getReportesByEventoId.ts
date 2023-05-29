@@ -3,7 +3,9 @@ import EventoReporte from "../../types/EventoReporte";
 export const getReportesByEventoId = async (
   id: number
 ): Promise<EventoReporte[]> => {
-  const url = `http://localhost:4000/api/reportes/evento?eventoId=${id}`;
+  const url = `${
+    import.meta.env.VITE_API_URL
+  }/api/reportes/evento?eventoId=${id}`;
 
   try {
     const response = await fetch(url);
