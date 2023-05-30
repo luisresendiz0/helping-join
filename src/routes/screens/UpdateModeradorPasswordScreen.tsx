@@ -47,7 +47,7 @@ const UpdatePasswordModeradorScreen = () => {
           duration: 5000,
           isClosable: true,
         });
-        navigate("/singin", { replace: true });
+        navigate("/signin", { replace: true });
       }
     } catch (error) {
       console.log(error);
