@@ -63,7 +63,7 @@ const EventScreen = () => {
 
   const handleOnClickEnviar = async () => {
     try {
-      await createReporte(Number(query.id), 3, descripcion);
+      await createReporte(Number(query.id), user.id_voluntario, descripcion);
       setDescripcion("");
       onClose();
     } catch (error) {
