@@ -3,6 +3,8 @@ import Beneficiado from "../../types/Beneficiado";
 export const getBeneficiadoById = async (
   id_beneficiado: number
 ): Promise<Beneficiado> => {
+  if (!id_beneficiado) return {} as Beneficiado;
+
   const url = `${
     import.meta.env.VITE_API_URL
   }/api/beneficiado/${id_beneficiado}`;

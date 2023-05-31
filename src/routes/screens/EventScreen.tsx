@@ -1,6 +1,9 @@
 import {
+  Alert,
+  Avatar,
   Box,
   Button,
+  CircularProgress,
   HStack,
   Heading,
   Modal,
@@ -12,10 +15,11 @@ import {
   ModalOverlay,
   Text,
   Textarea,
+  VStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getEventById } from "../../services/api/getEventById";
 import { updateEventoInterest } from "../../services/api/updateEventoInterest";
 import { createReporte } from "../../services/api/createReporte";
@@ -26,8 +30,10 @@ import { format } from "date-fns";
 import LocationMap from "../../components/general/LocationMap";
 import DisplayEvento from "../../components/eventos/DisplayEvento";
 import Voluntario from "../../types/Voluntario";
+import { getBeneficiadoById } from "../../services/api/getBeneficiadoById";
 
 const EventScreen = () => {
+  const navigate = useNavigate();
   const query = useParams();
   const userValue = useAtomValue(userAtom);
   const queryClient = useQueryClient();
@@ -42,6 +48,11 @@ const EventScreen = () => {
     queryFn: () => getEventById(Number(query.id), user?.id_voluntario),
   });
 
+  const beneficiadoQuery = useQuery({
+    queryKey: ["getBeneficiadoById", data?.id_beneficiado],
+    queryFn: () => getBeneficiadoById(data?.id_beneficiado || 0),
+  });
+
   const meInteresaMutation = useMutation({
     mutationFn: () =>
       updateEventoInterest(Number(query.id), user?.id_voluntario),
@@ -53,8 +64,6 @@ const EventScreen = () => {
       ]);
     },
   });
-
-  const currentDirection = `${data?.calle} ${data?.numero_exterior}, ${data?.colonia}, ${data?.alcaldia}, ${data?.entidad}, ${data?.codigo_postal}, Mexico`;
 
   const handleOnChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 128) return;
@@ -97,6 +106,32 @@ const EventScreen = () => {
             Para poder interactuar con los eventos primero debes verificar tu
             cuenta
           </Text>
+        )}
+
+        {beneficiadoQuery.data ? (
+          <Box
+            mt={8}
+            borderWidth={1}
+            borderColor="pink.400"
+            borderRadius={8}
+            padding={4}
+            onClick={() =>
+              navigate(
+                `/perfil-beneficiado-by-voluntario/${beneficiadoQuery.data.id_beneficiado}`
+              )
+            }
+          >
+            <VStack spacing={4}>
+              <Avatar
+                src={beneficiadoQuery.data.imagen}
+                size="md"
+                name={beneficiadoQuery.data.nombre}
+              />
+              <Heading size="md">{beneficiadoQuery.data.nombre}</Heading>
+            </VStack>
+          </Box>
+        ) : (
+          <CircularProgress isIndeterminate color="pink.300" />
         )}
       </DisplayEvento>
 

@@ -15,6 +15,7 @@ import UpdatePasswordModeradorScreen from "./screens/UpdateModeradorPasswordScre
 import EventoBeneficiadoScreen from "./screens/EventoBeneficiadoScreen";
 import SplashScreen from "./screens/SplashScreen";
 import RecoverPassword from "./screens/RecoverPasswort";
+import ProfileBeneficiadoByVoluntarioScreen from "./screens/ProfileBeneficiadoByVoluntarioScreen";
 
 export default () => {
   return (
@@ -71,6 +72,14 @@ export default () => {
           element={
             <ProtectedRoute>
               <ProfileBeneficiadoScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="perfil-beneficiado-by-voluntario/:id"
+          element={
+            <ProtectedRoute>
+              <ProfileBeneficiadoByVoluntarioScreen />
             </ProtectedRoute>
           }
         />
