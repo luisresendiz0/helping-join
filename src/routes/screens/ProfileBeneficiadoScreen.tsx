@@ -27,12 +27,14 @@ import { useNavigate } from "react-router-dom";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { getBeneficiadoById } from "../../services/api/getBeneficiadoById";
+import LocationMap from "../../components/general/LocationMap";
 
 const ProfileBeneficiadoScreen = () => {
+  const navigate = useNavigate();
   const userFromAtom = useAtomValue(userAtom);
   const setUser = useSetAtom(userAtom);
   const user = userFromAtom as Beneficiado;
-  const navigate = useNavigate();
+  const direccion = `${user.calle} ${user.numero_exterior}, ${user.colonia}, ${user.codigo_postal}, ${user.alcaldia}, ${user.entidad}`;
 
   const query = useQuery({
     queryKey: ["eventosBeneficiado", user.id_beneficiado],
@@ -71,7 +73,7 @@ const ProfileBeneficiadoScreen = () => {
             mb={4}
           />
         </GridItem>
-        <GridItem colSpan={[4, 3]}>
+        <GridItem colSpan={[4, 2]}>
           <Text fontSize="sm">Nombre de la organización</Text>
           <Heading size="md" mb={4}>
             {user.nombre}
@@ -80,8 +82,12 @@ const ProfileBeneficiadoScreen = () => {
           <Text mb={4} color="pink.500">
             {user.email}
           </Text>
-          <Text fontSize="sm">Descripción</Text>
-          <Text>{user.descripcion}</Text>
+          {user.descripcion && (
+            <>
+              <Text fontSize="sm">Descripción</Text>
+              <Text>{user.descripcion}</Text>
+            </>
+          )}
           <Stack my={4} wrap="wrap" direction={["column", "row"]}>
             {user.facebook && (
               <Link href={user.facebook} isExternal color="facebook.500">
@@ -116,6 +122,13 @@ const ProfileBeneficiadoScreen = () => {
               verificarla.
             </Text>
           )}
+        </GridItem>
+        <GridItem colSpan={[4, 1]}>
+          <LocationMap currentAddress={direccion} cp={user.codigo_postal} />
+          <Text fontSize="sm" mt={4}>
+            Dirección
+          </Text>
+          <Text>{direccion}</Text>
         </GridItem>
       </Grid>
       <Heading mb={8} size="lg">
