@@ -51,6 +51,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
         borderRadius={8}
         mb={8}
         p={8}
+        backgroundColor="white"
         templateColumns="repeat(4, 1fr)"
       >
         <GridItem colSpan={[4, 1]}>
@@ -71,8 +72,13 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
           <Text mb={4} color="pink.500">
             {user.email}
           </Text>
-          <Text fontSize="sm">Descripción</Text>
-          <Text>{user.descripcion}</Text>
+          {user.descripcion && (
+            <>
+              <Text fontSize="sm">Descripción</Text>
+              <Text>{user.descripcion}</Text>
+            </>
+          )}
+
           <Stack my={4} wrap="wrap" direction={["column", "row"]}>
             {user.facebook && (
               <Link href={user.facebook} isExternal color="facebook.500">
@@ -114,12 +120,14 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
           {query.data?.map((evento) => (
             <Box
               key={evento.id_evento}
-              h={200}
+              h={220}
               borderColor="pink.300"
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}
               p={4}
+              cursor="pointer"
+              backgroundColor="white"
               onClick={() => navigate(`/eventos/${evento.id_evento}`)}
             >
               <Heading size="md" mb={2}>

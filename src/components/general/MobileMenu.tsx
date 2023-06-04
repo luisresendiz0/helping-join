@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const menuItems = {
   voluntario: [
-    { name: "Recomendaciones", path: "/recomendaciones" },
-    { name: "Buscar", path: "/buscar" },
-    { name: "Perfil", path: "/perfil" },
+    { name: "📈 Recomendaciones", path: "/recomendaciones" },
+    { name: "🔍 Buscar", path: "/buscar" },
+    { name: "👤 Perfil", path: "/perfil" },
   ],
-  moderador: [{ name: "Reportes", path: "/reportes" }],
-  organizacion: [{ name: "Perfil", path: "/perfil-beneficiado" }],
+  moderador: [{ name: "📈 Reportes", path: "/reportes" }],
+  organizacion: [{ name: "👤 Perfil", path: "/perfil-beneficiado" }],
   validacion: [],
 };
 
@@ -82,7 +82,7 @@ const MobileMenu = (props: MobileMenuProps) => {
             props.closeSession();
           }}
         >
-          <Text>Cerrar sesión</Text>
+          <Text>📮 Cerrar sesión</Text>
         </Flex>
       </Grid>
     </Box>

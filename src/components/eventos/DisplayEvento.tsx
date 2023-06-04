@@ -64,7 +64,7 @@ const DisplayEvento: FunctionComponent<
               )}
             </Text>
             <Text as="b">Dirección:</Text>
-            <Text>{currentDirection}</Text>
+            <Text>📍 {currentDirection}</Text>
             <Text as="b">Interesados:</Text>
             <Text>{props.evento.interesados}</Text>
           </Box>

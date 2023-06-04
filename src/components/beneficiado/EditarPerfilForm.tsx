@@ -125,11 +125,9 @@ const EditarPerfilForm: FunctionComponent<
         <FormControl isInvalid={errors.descripcion ? true : false}>
           <FormLabel>Descripción</FormLabel>
           <Textarea
-            defaultValue={props.beneficiado.descripcion}
+            defaultValue={props.beneficiado.descripcion || ""}
             placeholder="Descripción"
-            {...register("descripcion", {
-              required: "Este campo es requerido",
-            })}
+            {...register("descripcion")}
           />
           {errors.descripcion && (
             <FormErrorMessage>{errors.descripcion.message}</FormErrorMessage>
@@ -185,12 +183,10 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.numero_interior ? true : false}>
             <FormLabel>Número interior</FormLabel>
             <Input
-              defaultValue={props.beneficiado.numero_interior}
+              defaultValue={props.beneficiado.numero_interior || ""}
               type="text"
               placeholder="Número interior"
-              {...register("numero_interior", {
-                required: "Este campo es requerido",
-              })}
+              {...register("numero_interior")}
             />
             {errors.numero_interior && (
               <FormErrorMessage>
@@ -266,12 +262,10 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.facebook ? true : false}>
             <FormLabel>Facebook</FormLabel>
             <Input
-              defaultValue={props.beneficiado["facebook" as keyof Beneficiado]}
+              defaultValue={props.beneficiado["facebook" as keyof Beneficiado] || ""}
               type="text"
               placeholder="Facebook"
-              {...register("facebook", {
-                required: "Este campo es requerido",
-              })}
+              {...register("facebook")}
             />
             {errors.facebook && (
               <FormErrorMessage>{errors.facebook.message}</FormErrorMessage>
@@ -280,12 +274,10 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.instagram ? true : false}>
             <FormLabel>Instagram</FormLabel>
             <Input
-              defaultValue={props.beneficiado["instagram" as keyof Beneficiado]}
+              defaultValue={props.beneficiado["instagram" as keyof Beneficiado] || ""}
               type="text"
               placeholder="Instagram"
-              {...register("instagram", {
-                required: "Este campo es requerido",
-              })}
+              {...register("instagram")}
             />
             {errors.instagram && (
               <FormErrorMessage>{errors.instagram.message}</FormErrorMessage>
@@ -294,12 +286,10 @@ const EditarPerfilForm: FunctionComponent<
           <FormControl isInvalid={errors.twitter ? true : false}>
             <FormLabel>Twitter</FormLabel>
             <Input
-              defaultValue={props.beneficiado["twitter" as keyof Beneficiado]}
+              defaultValue={props.beneficiado["twitter" as keyof Beneficiado] || ""}
               type="text"
               placeholder="Twitter"
-              {...register("twitter", {
-                required: "Este campo es requerido",
-              })}
+              {...register("twitter")}
             />
             {errors.twitter && (
               <FormErrorMessage>{errors.twitter.message}</FormErrorMessage>
@@ -309,7 +299,7 @@ const EditarPerfilForm: FunctionComponent<
         <FormControl isInvalid={errors.web ? true : false}>
           <FormLabel>Página web de contacto</FormLabel>
           <Input
-            defaultValue={props.beneficiado["web" as keyof Beneficiado]}
+            defaultValue={props.beneficiado["web" as keyof Beneficiado] || ""}
             type="text"
             placeholder="Página web de contacto"
             {...register("web")}

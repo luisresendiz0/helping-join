@@ -62,6 +62,7 @@ const ProfileBeneficiadoScreen = () => {
         borderRadius={8}
         mb={8}
         p={8}
+        backgroundColor="white"
         templateColumns="repeat(4, 1fr)"
       >
         <GridItem colSpan={[4, 1]}>
@@ -149,13 +150,14 @@ const ProfileBeneficiadoScreen = () => {
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}
+              backgroundColor="white"
               p={4}
               onClick={() =>
                 navigate(`/eventos-beneficiado/${evento.id_evento}`)
               }
             >
               <Heading size="md" mb={2}>
-                {evento.nombre}
+                📌 {evento.nombre}
               </Heading>
               <Text mb={2}>{evento.descripcion.substring(0, 40)}...</Text>
               <Text fontSize="sm">Fecha de inicio</Text>

@@ -70,26 +70,28 @@ const RecommendationsScreen = () => {
             <Box
               key={recomendation.id_evento}
               w="100%"
-              h="100%"
               borderColor="pink.300"
+              backgroundColor="white"
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}
+              cursor="pointer"
               p={4}
               onClick={() => handleOnClick(recomendation.id_evento)}
             >
               <Text fontWeight="bold" fontSize={18}>
                 {recomendation.nombre}
               </Text>
+              <Text>{recomendation.descripcion.substring(0, 40)}...</Text>
+              <Text mt={2} fontSize="sm">Fecha de inicio</Text>
               <Text>
-                Inicia:{" "}
                 {format(
                   new Date(recomendation.fecha_inicio),
                   "dd LLLL yyyy hh:mm aaa"
                 )}
               </Text>
+              <Text mt={2} fontSize="sm">Fecha de fin</Text>
               <Text>
-                Termina:{" "}
                 {format(
                   new Date(recomendation.fecha_fin),
                   "dd LLLL yyyy hh:mm aaa"

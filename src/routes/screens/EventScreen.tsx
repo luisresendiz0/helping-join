@@ -17,6 +17,7 @@ import {
   Textarea,
   VStack,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -37,6 +38,7 @@ const EventScreen = () => {
   const query = useParams();
   const userValue = useAtomValue(userAtom);
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const user = userValue as Voluntario;
 
@@ -75,6 +77,13 @@ const EventScreen = () => {
       await createReporte(Number(query.id), user.id_voluntario, descripcion);
       setDescripcion("");
       onClose();
+      toast({
+        title: "Reporte enviado",
+        description: "Su reporte ha sido enviado a nuestros moderadores",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -147,7 +156,7 @@ const EventScreen = () => {
               onChange={handleOnChangeText}
             />
             <Text fontSize="xs">
-              caracteres restantes: {128 - descripcion.length}
+              Caracteres restantes: {128 - descripcion.length}
             </Text>
           </ModalBody>
 
@@ -155,7 +164,7 @@ const EventScreen = () => {
             <Button variant="ghost" onClick={onClose}>
               Cancelar
             </Button>
-            <Button colorScheme="blue" mr={3} onClick={handleOnClickEnviar}>
+            <Button colorScheme="pink" mr={3} onClick={handleOnClickEnviar}>
               Enviar
             </Button>
           </ModalFooter>

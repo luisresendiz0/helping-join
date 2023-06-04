@@ -27,12 +27,12 @@ import MobileMenu from "./MobileMenu";
 
 const menuItems = {
   voluntario: [
-    { name: "Recomendaciones", path: "/recomendaciones" },
-    { name: "Buscar", path: "/buscar" },
-    { name: "Perfil", path: "/perfil" },
+    { name: "📈 Recomendaciones", path: "/recomendaciones" },
+    { name: "🔍 Buscar", path: "/buscar" },
+    { name: "👤 Perfil", path: "/perfil" },
   ],
-  moderador: [{ name: "Reportes", path: "/reportes" }],
-  organizacion: [{ name: "Perfil", path: "/perfil-beneficiado" }],
+  moderador: [{ name: "📈 Reportes", path: "/reportes" }],
+  organizacion: [{ name: "👤 Perfil", path: "/perfil-beneficiado" }],
   validacion: [],
 };
 
@@ -81,6 +81,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
       h="100vh"
       templateRows="repeat(12, 1fr)"
       templateColumns="repeat(12, 1fr)"
+      backgroundColor="gray.100"
     >
       <MobileMenu
         closeSession={closeSession}
@@ -96,6 +97,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
           w="full"
           h="full"
           paddingLeft={4}
+          backgroundColor="white"
         >
           <IconButton
             aria-label="Open drawer"
@@ -110,6 +112,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
         colSpan={[0, 2]}
         borderRight="1px solid"
         borderColor="pink.300"
+        backgroundColor="white"
         display={{
           base: "none",
           md: "block",
@@ -150,13 +153,12 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
           justify="center"
           onClick={closeSession}
         >
-          <Text>Cerrar sesion</Text>
+          <Text>📮 Cerrar sesion</Text>
         </Flex>
       </GridItem>
       <GridItem
         rowSpan={11}
         colSpan={[12, 10]}
-        bg="white"
         p={location.pathname === "/buscar" ? 0 : 8}
         overflowY="scroll"
       >

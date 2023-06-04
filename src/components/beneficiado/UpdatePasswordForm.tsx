@@ -12,6 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { FunctionComponent, PropsWithChildren } from "react";
 import { updateBeneficiadoPassword } from "../../services/api/updateBeneficiadoPassword";
+import PasswordInput from "../general/PasswordInput";
 
 type Inputs = {
   password: string;
@@ -78,14 +79,13 @@ const UpdatePasswordForm: FunctionComponent<
       </FormControl>
       <FormControl isInvalid={errors.newPassword ? true : false}>
         <FormLabel>Nueva contraseña</FormLabel>
-        <Input
+        <PasswordInput
           placeholder="Nueva contraseña"
-          type="text"
-          {...register("newPassword", {
+          register={register("newPassword", {
             required: true,
             // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
             pattern: {
-              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
               message:
                 "La contraseña debe tener al menos 8 caracteres, 1 mayúscula, 1 minúscula y 1 número",
             },
@@ -97,9 +97,9 @@ const UpdatePasswordForm: FunctionComponent<
       </FormControl>
       <FormControl isInvalid={errors.repeatNewPassword ? true : false}>
         <FormLabel>Repetir nueva contraseña</FormLabel>
-        <Input
-          type="text"
-          {...register("repeatNewPassword", {
+        <PasswordInput
+          placeholder="Repetir nueva contraseña"
+          register={register("repeatNewPassword", {
             required: true,
             // Compare with password
             validate: (value) =>

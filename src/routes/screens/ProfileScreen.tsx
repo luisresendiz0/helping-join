@@ -59,6 +59,7 @@ const ProfileScreen = () => {
         borderRadius={8}
         mb={8}
         p={8}
+        backgroundColor="white"
         templateColumns="repeat(4, 1fr)"
       >
         <GridItem colSpan={[4, 1]}>
@@ -80,7 +81,7 @@ const ProfileScreen = () => {
             <Heading size="md" mb={2} textAlign="center">
               {userQuery.data?.nombre}
             </Heading>
-            <Text mb={8} color="blue.500">
+            <Text mb={8} color="pink.500">
               {userQuery.data?.email}
             </Text>
           </Box>

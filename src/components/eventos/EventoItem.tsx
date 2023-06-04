@@ -28,18 +28,21 @@ const EventoItem: FunctionComponent<PropsWithChildren<EventoItemProps>> = (
       borderWidth={1}
       borderStyle="solid"
       borderRadius={8}
+      backgroundColor="white"
       p={4}
       onClick={() => props.onClick(evento.id_evento)}
     >
       <Text fontWeight="bold" fontSize={18}>
         {evento.nombre}
       </Text>
+      <Text mb={2}>{evento.descripcion.substring(0, 40)}...</Text>
+      <Text fontSize="sm">Fecha de inicio</Text>
+      
       <Text>
-        Inicia:{" "}
         {format(new Date(evento.fecha_inicio), "dd LLLL yyyy hh:mm aaa")}
       </Text>
-      <Text>
-        Termina: {format(new Date(evento.fecha_fin), "dd LLLL yyyy hh:mm aaa")}
+      <Text fontSize="sm">Fecha de fin</Text>
+      <Text>{format(new Date(evento.fecha_fin), "dd LLLL yyyy hh:mm aaa")}
       </Text>
       <Wrap mt={2}>
         {evento.categorias.split(",").map((cat) => (

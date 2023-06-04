@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { updateModeradorPassword } from "../../services/api/updateModeradorPassword";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import PasswordInput from "../../components/general/PasswordInput";
 
 type Inputs = {
   password: string;
@@ -62,16 +63,17 @@ const UpdatePasswordModeradorScreen = () => {
         w="50%"
         borderRadius={8}
         borderWidth={1}
-        borderColor="pink.200"
+        borderColor="pink.300"
+        backgroundColor="white"
         p={8}
         mt={8}
       >
         <VStack spacing={4}>
           <FormControl isRequired isInvalid={errors.password ? true : false}>
             <FormLabel>Nueva contraseña</FormLabel>
-            <Input
+            <PasswordInput
               placeholder="Nueva contraseña"
-              {...register("password", {
+              register={register("password", {
                 required: "Este campo es requerido",
                 minLength: {
                   value: 8,
@@ -80,7 +82,7 @@ const UpdatePasswordModeradorScreen = () => {
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
                   message:
-                    "La contrasena debe tener al menos 1 mayúscula, 1 minúscula y 1 número",
+                    "La contraseña debe tener al menos 1 mayúscula, 1 minúscula y 1 número",
                 },
                 // validar que la contrasena sea distinta de "Cambiame1"
                 validate: {
@@ -98,10 +100,10 @@ const UpdatePasswordModeradorScreen = () => {
             isRequired
             isInvalid={errors.confirmPassword ? true : false}
           >
-            <FormLabel>Confirma la contraseña</FormLabel>
-            <Input
-              placeholder="Confirma la contraseña"
-              {...register("confirmPassword", {
+            <FormLabel>Confirmar contraseña</FormLabel>
+            <PasswordInput
+              placeholder="Confirmar contraseña"
+              register={register("confirmPassword", {
                 required: "Este campo es requerido",
                 validate: {
                   matchesPreviousPassword: (value) => {
