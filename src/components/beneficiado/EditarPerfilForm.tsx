@@ -310,7 +310,7 @@ const EditarPerfilForm: FunctionComponent<
         </FormControl>
         <HStack spacing={4} width="full" justify="flex-end">
           <Button
-            colorScheme="pink"
+            colorScheme="orange"
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >

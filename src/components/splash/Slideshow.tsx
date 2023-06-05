@@ -77,7 +77,7 @@ const Slideshow = (props: SlideshowProps) => {
                     </Text>
                     <HStack spacing={4} mt={4}>
                       <Button
-                        colorScheme="pink"
+                        colorScheme="orange"
                         size="lg"
                         onClick={() => navigate("/signin")}
                       >

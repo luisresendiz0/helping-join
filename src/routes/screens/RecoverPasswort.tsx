@@ -101,7 +101,7 @@ const RecoverPassword = () => {
       <Flex justify="center" align="center" w="full" h="full">
         <Box
           borderWidth={1}
-          borderColor="pink"
+          borderColor="orange"
           borderRadius={8}
           p={8}
           width="100%"
@@ -235,7 +235,7 @@ const RecoverPassword = () => {
               </FormControl>
               <Button
                 isLoading={recoveringPassword}
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(handleResetPassword)}
               >
                 Restablecer contraseña

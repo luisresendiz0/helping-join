@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Flex,
   Grid,
@@ -89,7 +90,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
         showDrawer={showDrawer}
         setShowDrawer={setShowDrawer}
       />
-      <GridItem colSpan={12} borderBottom="1px solid" borderColor="pink.300">
+      <GridItem colSpan={12} borderBottom="1px solid" borderColor="orange.300">
         <Flex
           direction="row"
           justify="flex-start"
@@ -101,9 +102,11 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
         >
           <IconButton
             aria-label="Open drawer"
-            icon={<HamburgerIcon />}
+            borderRadius={99}
+            icon={<Avatar src="/logo1.jpg" size="md" />}
             onClick={() => setShowDrawer((prev) => !prev)}
           />
+          {/* <Avatar src="/logo1.jpg" /> */}
           <Heading pl={4}>Helping Join</Heading>
         </Flex>
       </GridItem>
@@ -111,7 +114,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
         rowSpan={11}
         colSpan={[0, 2]}
         borderRight="1px solid"
-        borderColor="pink.300"
+        borderColor="orange.300"
         backgroundColor="white"
         display={{
           base: "none",
@@ -125,10 +128,10 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
               width: "100%",
               height: "60px",
               backgroundColor:
-                location.pathname === item.path ? "pink.100" : "",
+                location.pathname === item.path ? "orange.100" : "",
               "&:hover": {
                 backgroundColor:
-                  location.pathname === item.path ? "pink.100" : "pink.50",
+                  location.pathname === item.path ? "orange.100" : "orange.50",
                 cursor: "pointer",
               },
             }}
@@ -136,7 +139,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
             justify="center"
             onClick={() => navigate(item.path)}
           >
-            <Text color="pink.900">{item.name}</Text>
+            <Text color="orange.900">{item.name}</Text>
           </Flex>
         ))}
         <Flex
@@ -145,7 +148,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
             height: "60px",
             backgroundColor: "",
             "&:hover": {
-              backgroundColor: "pink.50",
+              backgroundColor: "orange.50",
               cursor: "pointer",
             },
           }}
@@ -153,7 +156,7 @@ const Layout: FunctionComponent<PropsWithChildren> = (props) => {
           justify="center"
           onClick={closeSession}
         >
-          <Text>📮 Cerrar sesion</Text>
+          <Text>📮 Cerrar sesión</Text>
         </Flex>
       </GridItem>
       <GridItem

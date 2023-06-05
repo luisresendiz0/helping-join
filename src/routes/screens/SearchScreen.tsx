@@ -11,6 +11,7 @@ import {
   GridItem,
   Heading,
   HStack,
+  Image,
   Input,
   Menu,
   MenuButton,
@@ -29,7 +30,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { searchEvents } from "../../services/api/search";
 import { Controller, useForm } from "react-hook-form";
 import { getCategorias } from "../../services/api/getCaegorias";
@@ -41,10 +42,10 @@ import { useNavigate } from "react-router-dom";
 import Beneficiado from "../../types/Beneficiado";
 import Evento from "../../types/Evento";
 import isBeneficiadoArray from "../../utils/isBeneficiadoArray";
+import CivilItem from "../../components/eventos/CivilItem";
+import { debounce } from "lodash";
 
 interface Inputs {
-  text: string;
-  type: string;
   category: string;
   fecha_inicio: string;
   fecha_fin: string;
@@ -54,55 +55,75 @@ interface Inputs {
 type OrderType = "nombre" | "fecha_inicio";
 
 const SearchScreen = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [resultados, setResultados] = useState<Evento[] | Beneficiado[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [orderType, setOrderType] = useState<OrderType>("nombre");
 
+  const [text, setText] = useState("");
+
+  const debouncedText = debounce((value) => {
+    setText(value);
+  }, 500);
+
+  const [areEventos, setAreEventos] = useState(true);
+  const [areOrganizaciones, setAreOrganizaciones] = useState(true);
+  const [areCiviles, setAreCiviles] = useState(true);
+
   const navigate = useNavigate();
 
-  const { register, handleSubmit, control, watch } = useForm<Inputs>();
+  const { register, watch } = useForm<Inputs>();
   const category = watch("category");
   const fechaInicio = watch("fecha_inicio");
   const fechaFin = watch("fecha_fin");
   const alcaldia = watch("alcaldia");
+
+  const queryClient = useQueryClient();
 
   const categoriesQuery = useQuery(["categories"], async () => {
     const result = await getCategorias();
     return result.data as Categoria[];
   });
 
-  const onSubmit = async (data: Inputs) => {
-    console.log(data);
-    try {
-      setIsFetching(true);
-      const eventos = await searchEvents({
-        ...data,
-        entidad: "Ciudad de Mexico",
-      } as any);
-      console.log(eventos);
-      setResultados(eventos);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsFetching(false);
-    }
+  const searchQuery = useQuery({
+    queryKey: ["search", areEventos, areOrganizaciones, areCiviles, text],
+    queryFn: async () => {
+      let type = "";
+      if (areEventos) type += "eventos,";
+      if (areOrganizaciones) type += "organizaciones,";
+      if (areCiviles) type += "civiles";
+      const result = await searchEvents(text, type);
+      return result;
+    },
+  });
+
+  const onSubmit = async () => {
+    queryClient.invalidateQueries({ queryKey: ["search"] });
   };
 
-  const filterBeneficiados = (array: any[]) => {
-    const beneficiados = [...array] as Beneficiado[];
+  const filterBeneficiados = (beneficiados: Beneficiado[]) => {
+    interface BeneficiadoWithCategorias extends Beneficiado {
+      categorias: string;
+    }
+    const bwc = [...beneficiados] as BeneficiadoWithCategorias[];
 
-    return beneficiados
+    return bwc
       .filter((beneficiado) => {
-        // if (category.length > 0 && beneficiado.categories.includes(category)) {
-        //   return true;
-        // }
+        let ok = 0;
 
-        if (alcaldia.length > 0 && beneficiado.alcaldia === alcaldia) {
-          return true;
+        if (
+          category.length === 0 ||
+          (category.length > 0 && beneficiado.categorias.includes(category))
+        ) {
+          ok += 1;
         }
 
-        return false;
+        if (
+          alcaldia.length === 0 ||
+          (alcaldia.length > 0 && beneficiado.alcaldia === alcaldia)
+        ) {
+          ok += 1;
+        }
+
+        return ok === 2;
       })
       .sort((a, b) => {
         if (orderType === "nombre") {
@@ -110,11 +131,11 @@ const SearchScreen = () => {
         } else {
           return 0;
         }
-      });
+      })
+      .slice(0, 9);
   };
 
   const filterEventos = (array: any[]) => {
-    console.log(category, alcaldia, fechaInicio, fechaFin);
     interface EventoWithCategorias extends Evento {
       categorias: string;
     }
@@ -126,10 +147,7 @@ const SearchScreen = () => {
         const ok: boolean[] = [];
         if (
           category.length === 0 ||
-          evento.categorias
-            .split(", ")
-            .map((c) => c.split(":")[1])
-            .includes(category)
+          evento.categorias.split(", ").includes(category)
         ) {
           ok.push(true);
         }
@@ -151,7 +169,7 @@ const SearchScreen = () => {
           }
         }
 
-        return ok.length >= 2;
+        return ok.length > 2;
       })
       .sort((a, b) => {
         if (orderType === "nombre") {
@@ -162,8 +180,16 @@ const SearchScreen = () => {
             new Date(b.fecha_inicio).getTime()
           );
         }
-      }) as Evento[];
+      })
+      .slice(0, 9) as Evento[];
   };
+
+  // poner aqui los eventos, organizaciones y civiles filtrados para no repetir en el return, validar solo 9 como maximo
+  const eventosFiltrados = filterEventos(searchQuery.data?.eventos || []);
+  const organizacionesFiltradas = filterBeneficiados(
+    searchQuery.data?.organizaciones || []
+  );
+  const civilesFiltrados = filterBeneficiados(searchQuery.data?.civiles || []);
 
   return (
     <Grid
@@ -173,70 +199,135 @@ const SearchScreen = () => {
       templateColumns="repeat(10, 1fr)"
     >
       <GridItem rowSpan={11} colSpan={[10, 7]} p={8} overflowY="scroll">
-        <Box mb={8} display="flex" alignItems="center">
-          <FormControl mr={4}>
-            <Input
-              size="lg"
-              type="text"
-              {...register("text")}
-              placeholder="Busca por nombre de evento, organización, ciudad, etc."
-            />
-          </FormControl>
-          <Button colorScheme="pink" size="lg" onClick={handleSubmit(onSubmit)}>
-            Buscar
-          </Button>
-        </Box>
-
         <Box
+          backgroundColor="white"
+          p={4}
+          borderColor="orange.300"
+          borderWidth={1}
+          borderRadius={8}
           mb={8}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
         >
-          <Box>
-            <Select
-              placeholder="Ordenar por..."
-              w={200}
-              mr={4}
-              value={orderType}
-              onChange={(e) => setOrderType(e.target.value as OrderType)}
-            >
-              <option value="nombre">Nombre</option>
-              <option value="fecha_inicio">Fecha de inicio</option>
-            </Select>
-            {isFetching && (
-              <CircularProgress isIndeterminate color="pink.500" size="25px" />
-            )}
+          <Box mb={8} display="flex" alignItems="center">
+            <FormControl>
+              <Input
+                size="lg"
+                type="text"
+                onChange={(e) => debouncedText(e.target.value)}
+                placeholder="Busca por nombre de evento, organización, descripcion, etc."
+              />
+            </FormControl>
           </Box>
-          <Button onClick={() => setShowFilters((prev) => !prev)}>
-            Filtros
-          </Button>
-        </Box>
 
-        {resultados ? (
-          <SimpleGrid columns={[1, 3]} spacing={10} w="full">
-            {isBeneficiadoArray(resultados)
-              ? filterBeneficiados(resultados).map((beneficiado, i) => {
-                  return <Text key={i}>{beneficiado.nombre}</Text>;
-                })
-              : filterEventos(resultados).map((item, i) => {
-                  const evento = item as Evento;
-                  return (
-                    <EventoItem
-                      key={i}
-                      evento={evento}
-                      onClick={() => navigate(`/eventos/${evento.id_evento}`)}
-                    />
-                  );
-                })}
-          </SimpleGrid>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box display="flex" alignItems="center">
+              <Box>
+                <Text fontSize="sm">Ordenar por</Text>
+                <Select
+                  placeholder="Ordenar por..."
+                  w={200}
+                  mr={4}
+                  value={orderType}
+                  onChange={(e) => setOrderType(e.target.value as OrderType)}
+                >
+                  <option value="nombre">Nombre</option>
+                  <option value="fecha_inicio">Fecha de inicio</option>
+                </Select>
+              </Box>
+              {searchQuery.isLoading && (
+                <CircularProgress
+                  isIndeterminate
+                  color="orange.500"
+                  size="25px"
+                />
+              )}
+            </Box>
+            <Button
+              display={["block", "none"]}
+              onClick={() => setShowFilters((prev) => !prev)}
+            >
+              Filtros
+            </Button>
+          </Box>
+        </Box>
+        {eventosFiltrados.length === 0 &&
+          organizacionesFiltradas.length === 0 &&
+          civilesFiltrados.length === 0 && (
+            <Box>
+              <Box display="flex" justifyContent="center">
+                <Image src="/empty.png" w={["80%", "40%"]} />
+              </Box>
+              <Text textAlign="center">
+                Lo siento, no se han encontrado resultados sobre esa búsqueda en
+                particular.
+              </Text>
+            </Box>
+          )}
+        {eventosFiltrados.length ? (
+          <Box mb={8}>
+            <Heading size="lg" mb={4}>
+              Eventos
+            </Heading>
+            <SimpleGrid spacing={4} columns={[1, 3]}>
+              {eventosFiltrados.map((e) => (
+                <EventoItem
+                  key={e.id_evento}
+                  evento={e}
+                  onClick={() => navigate("/eventos/" + e.id_evento)}
+                />
+              ))}
+            </SimpleGrid>
+          </Box>
+        ) : null}
+        {organizacionesFiltradas.length ? (
+          <Box mb={8}>
+            <Heading size="lg" mb={4}>
+              Organizaciones
+            </Heading>
+            <SimpleGrid spacing={4} columns={[1, 3]}>
+              {organizacionesFiltradas.map((o) => (
+                <CivilItem
+                  key={o.id_beneficiado}
+                  beneficiado={o}
+                  onClick={() =>
+                    navigate(
+                      "/perfil-beneficiado-by-voluntario/" + o.id_beneficiado
+                    )
+                  }
+                />
+              ))}
+            </SimpleGrid>
+          </Box>
+        ) : null}
+        {civilesFiltrados.length ? (
+          <Box mb={8}>
+            <Heading size="lg" mb={4}>
+              Civiles independientes
+            </Heading>
+            <SimpleGrid spacing={4} columns={[1, 3]}>
+              {civilesFiltrados.map((o) => (
+                <CivilItem
+                  key={o.id_beneficiado}
+                  beneficiado={o}
+                  onClick={() =>
+                    navigate(
+                      "/perfil-beneficiado-by-voluntario/" + o.id_beneficiado
+                    )
+                  }
+                />
+              ))}
+            </SimpleGrid>
+          </Box>
         ) : null}
       </GridItem>
       <GridItem
         rowSpan={11}
         colSpan={[10, 3]}
         borderLeftWidth={[0, 1]}
-        borderLeftColor={["transparent", "pink.300"]}
+        borderLeftColor={["transparent", "orange.300"]}
         p={4}
         position={["absolute", "relative"]}
         top={0}
@@ -259,25 +350,38 @@ const SearchScreen = () => {
         <VStack
           spacing={8}
           align="start"
-          divider={<StackDivider borderColor="pink.200" />}
+          divider={<StackDivider borderColor="orange.200" />}
         >
-          <Controller
-            name="type"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <RadioGroup value={value} onChange={onChange}>
-                <Stack direction="column">
-                  <Radio value="evento">Eventos</Radio>
-                  <Radio value="organizacion">Organizaciones</Radio>
-                  <Radio value="civil">Civiles independientes</Radio>
-                </Stack>
-              </RadioGroup>
-            )}
-          />
+          <VStack spacing={4} align="start">
+            <Checkbox
+              colorScheme="orange"
+              isChecked={areEventos}
+              onChange={() => setAreEventos((prev) => !prev)}
+            >
+              Eventos
+            </Checkbox>
+            <Checkbox
+              colorScheme="orange"
+              isChecked={areOrganizaciones}
+              onChange={() => setAreOrganizaciones((prev) => !prev)}
+            >
+              Organizaciones
+            </Checkbox>
+            <Checkbox
+              colorScheme="orange"
+              isChecked={areCiviles}
+              onChange={() => setAreCiviles((prev) => !prev)}
+            >
+              Civiles independientes
+            </Checkbox>
+          </VStack>
 
           <FormControl>
             <FormLabel>Categoria</FormLabel>
-            <Select placeholder="Categoria" {...register("category")}>
+            <Select
+              placeholder="Todas las categorias"
+              {...register("category")}
+            >
               {categoriesQuery.data?.map((category) => (
                 <option key={category.id_categoria} value={category.nombre}>
                   {category.nombre}
@@ -311,7 +415,7 @@ const SearchScreen = () => {
           </VStack>
           <FormControl>
             <FormLabel>Alcaldia</FormLabel>
-            <Select placeholder="Alcaldia" {...register("alcaldia")}>
+            <Select placeholder="Todas las alcaldias" {...register("alcaldia")}>
               {estados["Ciudad de Mexico"].map((alcaldia) => (
                 <option key={alcaldia} value={alcaldia}>
                   {alcaldia}

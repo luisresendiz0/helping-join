@@ -51,7 +51,7 @@ const Card: FunctionComponent<PropsWithChildren> = (props) => {
       w="100%"
       maxW="450px"
       border="1px solid"
-      borderColor="pink.300"
+      borderColor="orange.300"
       borderRadius={8}
       padding="8"
       justify="space-between"
@@ -447,12 +447,12 @@ const SignUpScreen = () => {
             <Flex justify="space-between" align="center" mt={4}>
               <Text>
                 Ya tiene una cuenta?{" "}
-                <Link color="pink.500" as={RLink} to="/signin">
+                <Link color="orange.500" as={RLink} to="/signin">
                   Iniciar sesion
                 </Link>
               </Text>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep(1))}
               >
                 Continuar
@@ -607,7 +607,7 @@ const SignUpScreen = () => {
                 Atrás
               </Button>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep(2))}
               >
                 Continuar
@@ -627,26 +627,36 @@ const SignUpScreen = () => {
               <Box>
                 {isOrganizacion || isCivil ? (
                   <Wrap direction="row" spacing={4} justify="center">
-                    {categorias.map((categoria, index) => (
-                      <WrapItem key={categoria.id_categoria}>
-                        <Tag
-                          size="lg"
-                          cursor="pointer"
-                          colorScheme={
-                            beneficiadoCategorias.includes(
-                              categoria.id_categoria
-                            )
-                              ? "pink"
-                              : "gray"
-                          }
-                          onClick={() =>
-                            toggleBeneficiadoCategoria(categoria.id_categoria)
-                          }
-                        >
-                          <TagLabel>{categoria.nombre}</TagLabel>
-                        </Tag>
-                      </WrapItem>
-                    ))}
+                    {categorias
+                      .sort(function (a, b) {
+                        if (a.nombre < b.nombre) {
+                          return -1;
+                        }
+                        if (a.nombre > b.nombre) {
+                          return 1;
+                        }
+                        return 0;
+                      })
+                      .map((categoria, index) => (
+                        <WrapItem key={categoria.id_categoria}>
+                          <Tag
+                            size="lg"
+                            cursor="pointer"
+                            colorScheme={
+                              beneficiadoCategorias.includes(
+                                categoria.id_categoria
+                              )
+                                ? "orange"
+                                : "gray"
+                            }
+                            onClick={() =>
+                              toggleBeneficiadoCategoria(categoria.id_categoria)
+                            }
+                          >
+                            <TagLabel>{categoria.nombre}</TagLabel>
+                          </Tag>
+                        </WrapItem>
+                      ))}
                   </Wrap>
                 ) : (
                   <Stack>
@@ -681,14 +691,14 @@ const SignUpScreen = () => {
               {isOrganizacion || isCivil ? (
                 <Button
                   isLoading={loading}
-                  colorScheme="pink"
+                  colorScheme="orange"
                   onClick={handleSubmit(onSubmit)}
                 >
                   Registrarse
                 </Button>
               ) : (
                 <Button
-                  colorScheme="pink"
+                  colorScheme="orange"
                   onClick={handleSubmit(() => setStep(3))}
                 >
                   Continuar
@@ -735,7 +745,7 @@ const SignUpScreen = () => {
                 Atras
               </Button>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -781,7 +791,7 @@ const SignUpScreen = () => {
                 Atras
               </Button>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -827,7 +837,7 @@ const SignUpScreen = () => {
                 Atrás
               </Button>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -873,7 +883,7 @@ const SignUpScreen = () => {
                 Atrás
               </Button>
               <Button
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(() => setStep((s) => s + 1))}
               >
                 Continuar
@@ -920,7 +930,7 @@ const SignUpScreen = () => {
               </Button>
               <Button
                 isLoading={loading}
-                colorScheme="pink"
+                colorScheme="orange"
                 onClick={handleSubmit(onSubmit)}
               >
                 Registrarse

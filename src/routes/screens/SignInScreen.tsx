@@ -187,7 +187,7 @@ const SignInScreen = () => {
       <Flex justify="center" align="center" w="full" h="full">
         <Box
           borderWidth={1}
-          borderColor="pink"
+          borderColor="orange"
           borderRadius={8}
           p={8}
           width="100%"
@@ -235,14 +235,14 @@ const SignInScreen = () => {
             )}
           </FormControl>
           <Flex justify="flex-end" mb={8}>
-            <Link as={RLink} color="pink.500" to="/recover-password">
+            <Link as={RLink} color="orange.500" to="/recover-password">
               Olvidé mi contraseña
             </Link>
           </Flex>
           <Flex justify="center">
             <Button
               onClick={handleSubmit(handleOnSubmit)}
-              colorScheme="pink"
+              colorScheme="orange"
               isLoading={loading}
               loadingText="Iniciando sesion..."
             >
@@ -251,7 +251,7 @@ const SignInScreen = () => {
           </Flex>
           <Text mt={12}>
             Aun no tiene una cuenta?{" "}
-            <Link as={RLink} color="pink.500" to="/signup">
+            <Link as={RLink} color="orange.500" to="/signup">
               Regístrese
             </Link>
           </Text>

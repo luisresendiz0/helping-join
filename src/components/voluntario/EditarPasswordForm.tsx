@@ -119,7 +119,7 @@ const EditarPasswordForm: FunctionComponent<
         marginTop="1rem"
       >
         <Button
-          colorScheme="pink"
+          colorScheme="orange"
           type="submit"
           onClick={handleSubmit(onSubmit)}
         >

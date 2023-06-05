@@ -45,7 +45,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
   return (
     <Box>
       <Grid
-        borderColor="pink.300"
+        borderColor="orange.300"
         borderWidth={1}
         borderStyle="solid"
         borderRadius={8}
@@ -59,7 +59,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
             size="2xl"
             name={user.nombre}
             src={user.imagen}
-            bg="pink.100"
+            bg="orange.100"
             mb={4}
           />
         </GridItem>
@@ -69,7 +69,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
             {user.nombre}
           </Heading>
           <Text fontSize="sm">Correo electrónico</Text>
-          <Text mb={4} color="pink.500">
+          <Text mb={4} color="orange.500">
             {user.email}
           </Text>
           {user.descripcion && (
@@ -91,12 +91,12 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
               </Link>
             )}
             {user.instagram && (
-              <Link href={user.instagram} isExternal color="pink.500">
+              <Link href={user.instagram} isExternal color="orange.500">
                 Instagram <ExternalLinkIcon mx="2px" />
               </Link>
             )}
             {user.web && (
-              <Link href={user.web} isExternal color="pink.500">
+              <Link href={user.web} isExternal color="orange.500">
                 Pagina web <ExternalLinkIcon mx="2px" />
               </Link>
             )}
@@ -121,7 +121,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
             <Box
               key={evento.id_evento}
               h={220}
-              borderColor="pink.300"
+              borderColor="orange.300"
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}

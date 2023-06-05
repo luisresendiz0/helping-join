@@ -322,7 +322,7 @@ const CreateEventoForm: FunctionComponent<
                 cursor="pointer"
                 colorScheme={
                   catsSelected.includes(categoria.id_categoria)
-                    ? "pink"
+                    ? "orange"
                     : "gray"
                 }
                 onClick={() => toggleCatSelected(categoria.id_categoria)}
@@ -333,7 +333,7 @@ const CreateEventoForm: FunctionComponent<
         </SimpleGrid>
         <Button
           isLoading={isLoading}
-          colorScheme="pink"
+          colorScheme="orange"
           onClick={handleSubmit((data) => createMutation.mutate(data))}
         >
           Crear evento

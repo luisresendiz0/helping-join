@@ -63,7 +63,7 @@ const UpdatePasswordModeradorScreen = () => {
         w="50%"
         borderRadius={8}
         borderWidth={1}
-        borderColor="pink.300"
+        borderColor="orange.300"
         backgroundColor="white"
         p={8}
         mt={8}
@@ -121,7 +121,7 @@ const UpdatePasswordModeradorScreen = () => {
           </FormControl>
           <Flex justifyContent="flex-end" w="full">
             <Button
-              colorScheme="pink"
+              colorScheme="orange"
               type="submit"
               onClick={handleSubmit(handleUpdatePassword)}
             >

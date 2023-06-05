@@ -121,7 +121,7 @@ const EventScreen = () => {
           <Box
             mt={8}
             borderWidth={1}
-            borderColor="pink.400"
+            borderColor="orange.400"
             borderRadius={8}
             padding={4}
             onClick={() =>
@@ -140,7 +140,7 @@ const EventScreen = () => {
             </VStack>
           </Box>
         ) : (
-          <CircularProgress isIndeterminate color="pink.300" />
+          <CircularProgress isIndeterminate color="orange.300" />
         )}
       </DisplayEvento>
 
@@ -164,7 +164,7 @@ const EventScreen = () => {
             <Button variant="ghost" onClick={onClose}>
               Cancelar
             </Button>
-            <Button colorScheme="pink" mr={3} onClick={handleOnClickEnviar}>
+            <Button colorScheme="orange" mr={3} onClick={handleOnClickEnviar}>
               Enviar
             </Button>
           </ModalFooter>

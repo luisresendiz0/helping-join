@@ -165,7 +165,7 @@ const ReportesScreen = () => {
           bg="white"
           borderRadius="md"
           borderWidth={1}
-          borderColor="pink.200"
+          borderColor="orange.200"
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
@@ -185,7 +185,7 @@ const ReportesScreen = () => {
           bg="white"
           borderRadius="md"
           borderWidth={1}
-          borderColor="pink.200"
+          borderColor="orange.200"
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
@@ -205,7 +205,7 @@ const ReportesScreen = () => {
         bg="white"
         borderRadius="md"
         borderWidth={1}
-        borderColor="pink.200"
+        borderColor="orange.200"
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
@@ -233,14 +233,14 @@ const ReportesScreen = () => {
                     <Td>
                       <Stack direction="row" spacing={4}>
                         <Button
-                          colorScheme="pink"
+                          colorScheme="orange"
                           size="sm"
                           onClick={() => handleOnClickVer(reporte.id_evento)}
                         >
                           Ver
                         </Button>
                         <Button
-                          colorScheme="pink"
+                          colorScheme="orange"
                           size="sm"
                           onClick={() =>
                             handleOnClickMantener(reporte.id_evento)

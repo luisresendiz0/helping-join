@@ -235,7 +235,7 @@ const EditarEventoForm = (props: Props) => {
       </FormControl>
       <Box justifyContent="center" alignItems="center" p={2} marginTop={4}>
         <Button
-          colorScheme="pink"
+          colorScheme="orange"
           onClick={handleSubmit(onSubmit)}
           type="submit"
         >

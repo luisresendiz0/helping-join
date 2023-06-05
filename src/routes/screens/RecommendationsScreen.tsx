@@ -70,7 +70,7 @@ const RecommendationsScreen = () => {
             <Box
               key={recomendation.id_evento}
               w="100%"
-              borderColor="pink.300"
+              borderColor="orange.300"
               backgroundColor="white"
               borderWidth={1}
               borderStyle="solid"

@@ -27,7 +27,7 @@ const DisplayEvento: FunctionComponent<
       bg="white"
       borderRadius="md"
       borderWidth={1}
-      borderColor="pink.200"
+      borderColor="orange.200"
       p={4}
       display="flex"
       flexDirection="column"

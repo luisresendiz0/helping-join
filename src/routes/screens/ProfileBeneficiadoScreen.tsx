@@ -56,7 +56,7 @@ const ProfileBeneficiadoScreen = () => {
   return (
     <Box>
       <Grid
-        borderColor="pink.300"
+        borderColor="orange.300"
         borderWidth={1}
         borderStyle="solid"
         borderRadius={8}
@@ -70,17 +70,21 @@ const ProfileBeneficiadoScreen = () => {
             size="2xl"
             name={user.nombre}
             src={user.imagen}
-            bg="pink.100"
+            bg="orange.100"
             mb={4}
           />
         </GridItem>
         <GridItem colSpan={[4, 2]}>
-          <Text fontSize="sm">Nombre de la organización</Text>
+          <Text fontSize="sm">
+            {user.responsable
+              ? "Nombre de la organización"
+              : "Nombre del civil independiente"}
+          </Text>
           <Heading size="md" mb={4}>
             {user.nombre}
           </Heading>
           <Text fontSize="sm">Correo electrónico</Text>
-          <Text mb={4} color="pink.500">
+          <Text mb={4} color="orange.500">
             {user.email}
           </Text>
           {user.descripcion && (
@@ -101,12 +105,12 @@ const ProfileBeneficiadoScreen = () => {
               </Link>
             )}
             {user.instagram && (
-              <Link href={user.instagram} isExternal color="pink.500">
+              <Link href={user.instagram} isExternal color="orange.500">
                 Instagram <ExternalLinkIcon mx="2px" />
               </Link>
             )}
             {user.web && (
-              <Link href={user.web} isExternal color="pink.500">
+              <Link href={user.web} isExternal color="orange.500">
                 Pagina web <ExternalLinkIcon mx="2px" />
               </Link>
             )}
@@ -141,12 +145,11 @@ const ProfileBeneficiadoScreen = () => {
           uno.
         </Text>
       ) : (
-        <SimpleGrid columns={[1, 4]} spacing={10} w="full" h="container.sm">
+        <SimpleGrid columns={[1, 4]} spacing={10} w="full">
           {query.data?.map((evento) => (
             <Box
               key={evento.id_evento}
-              h={200}
-              borderColor="pink.300"
+              borderColor="orange.300"
               borderWidth={1}
               borderStyle="solid"
               borderRadius={8}

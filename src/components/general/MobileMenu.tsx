@@ -48,10 +48,10 @@ const MobileMenu = (props: MobileMenuProps) => {
               width: "100%",
               height: "60px",
               backgroundColor:
-                location.pathname === item.path ? "pink.100" : "",
+                location.pathname === item.path ? "orange.100" : "",
               "&:hover": {
                 backgroundColor:
-                  location.pathname === item.path ? "pink.100" : "pink.50",
+                  location.pathname === item.path ? "orange.100" : "orange.50",
                 cursor: "pointer",
               },
             }}
@@ -62,7 +62,7 @@ const MobileMenu = (props: MobileMenuProps) => {
               navigate(item.path);
             }}
           >
-            <Text color="pink.900">{item.name}</Text>
+            <Text color="orange.900">{item.name}</Text>
           </Flex>
         ))}
         <Flex
@@ -71,7 +71,7 @@ const MobileMenu = (props: MobileMenuProps) => {
             height: "60px",
             backgroundColor: "",
             "&:hover": {
-              backgroundColor: "pink.50",
+              backgroundColor: "orange.50",
               cursor: "pointer",
             },
           }}

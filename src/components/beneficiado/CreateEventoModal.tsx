@@ -27,7 +27,7 @@ const CreateEventoModal: FunctionComponent<
   return (
     <>
       <Button
-        colorScheme="pink"
+        colorScheme="orange"
         onClick={onOpen}
         isDisabled={user?.verificado === 0}
       >

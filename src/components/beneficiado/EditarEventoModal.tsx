@@ -25,7 +25,7 @@ const EditarEventoModal = (props: Props) => {
   return (
     <Box>
       <Button
-        colorScheme="pink"
+        colorScheme="orange"
         onClick={onOpen}
         isDisabled={user?.verificado === 0}
       >

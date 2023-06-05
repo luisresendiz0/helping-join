@@ -9,7 +9,7 @@ const SplashScreen = () => {
       <Slideshow objetivoRef={objetivoRef} />
       <Flex justify="center" align="center" w="100vw" h="100vh">
         <Box paddingX={{ base: 8, md: 64 }} ref={objetivoRef}>
-          <Heading textAlign="center" mb={8} color="pink.500">
+          <Heading textAlign="center" mb={8} color="orange.500">
             Objetivo
           </Heading>
           <Text textAlign="center">

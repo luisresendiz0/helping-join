@@ -20,7 +20,7 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
       <GridItem
         colSpan={12}
         borderBottom="1px solid"
-        borderColor="pink.300"
+        borderColor="orange.300"
         padding={4}
       >
         <Flex
@@ -39,8 +39,8 @@ const LoginLayout: FunctionComponent<PropsWithChildren> = (props) => {
         rowSpan={11}
         colSpan={6}
         borderRight="1px solid"
-        borderColor="pink.300"
-        bg="pink.100"
+        borderColor="orange.300"
+        bg="orange.100"
       >
         <Image
           src={pattern}

@@ -53,7 +53,7 @@ const ProfileScreen = () => {
   return (
     <Box>
       <Grid
-        borderColor="pink.300"
+        borderColor="orange.300"
         borderWidth={1}
         borderStyle="solid"
         borderRadius={8}
@@ -68,7 +68,7 @@ const ProfileScreen = () => {
               size="2xl"
               name={userQuery.data?.nombre}
               src={userQuery.data?.imagen}
-              bg="pink.100"
+              bg="orange.100"
             />
           </Box>
         </GridItem>
@@ -81,7 +81,7 @@ const ProfileScreen = () => {
             <Heading size="md" mb={2} textAlign="center">
               {userQuery.data?.nombre}
             </Heading>
-            <Text mb={8} color="pink.500">
+            <Text mb={8} color="orange.500">
               {userQuery.data?.email}
             </Text>
           </Box>
@@ -102,7 +102,7 @@ const ProfileScreen = () => {
                 <Box
                   key={evento.id_evento}
                   h={200}
-                  borderColor="pink.300"
+                  borderColor="orange.300"
                   borderWidth={1}
                   borderStyle="solid"
                   borderRadius={8}
@@ -139,7 +139,7 @@ const ProfileScreen = () => {
                 <Box
                   key={evento.id_evento}
                   h={200}
-                  borderColor="pink.300"
+                  borderColor="orange.300"
                   borderWidth={1}
                   borderStyle="solid"
                   borderRadius={8}
