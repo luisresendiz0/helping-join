@@ -35,7 +35,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
   });
 
   const user = data as Beneficiado;
-  const direccion = `${user.calle} ${user.numero_exterior}, ${user.colonia}, ${user.codigo_postal}, ${user.alcaldia}, ${user.entidad}`;
+  const direccion = `${user?.calle} ${user?.numero_exterior}, ${user?.colonia}, ${user?.codigo_postal}, ${user?.alcaldia}, ${user?.entidad}`;
 
   const query = useQuery({
     queryKey: ["eventosBeneficiado", beneficiadoId],
@@ -57,8 +57,8 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
         <GridItem colSpan={[4, 1]}>
           <Avatar
             size="2xl"
-            name={user.nombre}
-            src={user.imagen}
+            name={user?.nombre}
+            src={user?.imagen}
             bg="orange.100"
             mb={4}
           />
@@ -66,44 +66,44 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
         <GridItem colSpan={[4, 2]}>
           <Text fontSize="sm">Nombre de la organización</Text>
           <Heading size="md" mb={4}>
-            {user.nombre}
+            {user?.nombre}
           </Heading>
           <Text fontSize="sm">Correo electrónico</Text>
           <Text mb={4} color="orange.500">
-            {user.email}
+            {user?.email}
           </Text>
-          {user.descripcion && (
+          {user?.descripcion && (
             <>
               <Text fontSize="sm">Descripción</Text>
-              <Text>{user.descripcion}</Text>
+              <Text>{user?.descripcion}</Text>
             </>
           )}
 
           <Stack my={4} wrap="wrap" direction={["column", "row"]}>
-            {user.facebook && (
-              <Link href={user.facebook} isExternal color="facebook.500">
+            {user?.facebook && (
+              <Link href={user?.facebook} isExternal color="facebook.500">
                 Facebook <ExternalLinkIcon mx="2px" />
               </Link>
             )}
-            {user.twitter && (
-              <Link href={user.twitter} isExternal color="twitter.500">
+            {user?.twitter && (
+              <Link href={user?.twitter} isExternal color="twitter.500">
                 Twitter <ExternalLinkIcon mx="2px" />
               </Link>
             )}
-            {user.instagram && (
-              <Link href={user.instagram} isExternal color="orange.500">
+            {user?.instagram && (
+              <Link href={user?.instagram} isExternal color="orange.500">
                 Instagram <ExternalLinkIcon mx="2px" />
               </Link>
             )}
-            {user.web && (
-              <Link href={user.web} isExternal color="orange.500">
+            {user?.web && (
+              <Link href={user?.web} isExternal color="orange.500">
                 Pagina web <ExternalLinkIcon mx="2px" />
               </Link>
             )}
           </Stack>
         </GridItem>
         <GridItem colSpan={[4, 1]}>
-          <LocationMap currentAddress={direccion} cp={user.codigo_postal} />
+          <LocationMap currentAddress={direccion} cp={user?.codigo_postal} />
           <Text fontSize="sm" mt={4}>
             Dirección
           </Text>
