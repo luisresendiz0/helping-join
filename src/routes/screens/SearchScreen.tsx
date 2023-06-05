@@ -110,15 +110,15 @@ const SearchScreen = () => {
         let ok = 0;
 
         if (
-          category.length === 0 ||
-          (category.length > 0 && beneficiado.categorias.includes(category))
+          category?.length === 0 ||
+          (category?.length > 0 && beneficiado.categorias.includes(category))
         ) {
           ok += 1;
         }
 
         if (
-          alcaldia.length === 0 ||
-          (alcaldia.length > 0 && beneficiado.alcaldia === alcaldia)
+          alcaldia?.length === 0 ||
+          (alcaldia?.length > 0 && beneficiado.alcaldia === alcaldia)
         ) {
           ok += 1;
         }
@@ -146,13 +146,13 @@ const SearchScreen = () => {
       .filter((evento) => {
         const ok: boolean[] = [];
         if (
-          category.length === 0 ||
+          category?.length === 0 ||
           evento.categorias.split(", ").includes(category)
         ) {
           ok.push(true);
         }
 
-        if (alcaldia.length === 0 || evento.alcaldia === alcaldia) {
+        if (alcaldia?.length === 0 || evento.alcaldia === alcaldia) {
           ok.push(true);
         }
 
@@ -169,7 +169,7 @@ const SearchScreen = () => {
           }
         }
 
-        return ok.length > 2;
+        return ok.length === 3;
       })
       .sort((a, b) => {
         if (orderType === "nombre") {
