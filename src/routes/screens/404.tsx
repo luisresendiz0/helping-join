@@ -8,6 +8,8 @@ const NotFound = () => {
   const navigate = useNavigate();
   const u = useAtomValue(userAtom);
 
+  console.log("404", u);
+
   useEffect(() => {
     if (!u) {
       navigate("/signin", { replace: true });

@@ -6,9 +6,12 @@ import { getReportesByEventoId } from "../../services/api/getReportesByEventoId"
 import { useQuery } from "react-query";
 import DisplayEvento from "../../components/eventos/DisplayEvento";
 import { format } from "date-fns";
+import { useAtomValue } from "jotai";
+import userAtom from "../../atoms/userAtom";
 
 const ReporteScreen = () => {
   const params = useParams();
+  const u = useAtomValue(userAtom);
 
   const eventoId = Number(params.id);
 

@@ -39,6 +39,7 @@ const EditarEventoForm = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<Inputs>();
 
   const onSubmit = async (data: Inputs) => {
@@ -110,6 +111,15 @@ const EditarEventoForm = (props: Props) => {
             placeholder="Fecha de fin"
             {...register("fecha_fin", {
               required: "Este campo es requerido",
+              validate: {
+                validateDates: (value) => {
+                  const { fecha_inicio } = getValues();
+                  return (
+                    new Date(value) > new Date(fecha_inicio) ||
+                    "El rango de fecha no es válido"
+                  );
+                },
+              },
             })}
             type="datetime-local"
           />

@@ -19,19 +19,10 @@ import ProfileBeneficiadoByVoluntarioScreen from "./screens/ProfileBeneficiadoBy
 import { useAtomValue } from "jotai";
 import userAtom from "../atoms/userAtom";
 import NotFound from "./screens/404";
+import { useState, useEffect } from "react";
 
 export default () => {
   const u = useAtomValue(userAtom);
-  const userType =
-    u === null
-      ? "no-auth"
-      : u["id_beneficiado" as keyof typeof u]
-      ? "beneficiado"
-      : u["id_voluntario" as keyof typeof u]
-      ? "voluntario"
-      : "moderador";
-
-  console.log("user type", userType);
 
   return (
     <Routes>
@@ -58,84 +49,72 @@ export default () => {
           path="/update-moderador-password/:id"
           element={<UpdatePasswordModeradorScreen />}
         />
-        {userType === "voluntario" ? (
-          <>
-            <Route
-              path="recomendaciones"
-              element={
-                <ProtectedRoute>
-                  <RecommendationsScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="buscar"
-              element={
-                <ProtectedRoute>
-                  <SearchScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="perfil"
-              element={
-                <ProtectedRoute>
-                  <ProfileScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="perfil-beneficiado-by-voluntario/:id"
-              element={
-                <ProtectedRoute>
-                  <ProfileBeneficiadoByVoluntarioScreen />
-                </ProtectedRoute>
-              }
-            />
-          </>
-        ) : null}
+        <Route
+          path="recomendaciones"
+          element={
+            <ProtectedRoute>
+              <RecommendationsScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="buscar"
+          element={
+            <ProtectedRoute>
+              <SearchScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="perfil"
+          element={
+            <ProtectedRoute>
+              <ProfileScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="perfil-beneficiado-by-voluntario/:id"
+          element={
+            <ProtectedRoute>
+              <ProfileBeneficiadoByVoluntarioScreen />
+            </ProtectedRoute>
+          }
+        />
 
-        {userType === "beneficiado" ? (
-          <>
-            <Route
-              path="perfil-beneficiado"
-              element={
-                <ProtectedRoute>
-                  <ProfileBeneficiadoScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="eventos-beneficiado/:id"
-              element={
-                <ProtectedRoute>
-                  <EventoBeneficiadoScreen />
-                </ProtectedRoute>
-              }
-            />
-          </>
-        ) : null}
+        <Route
+          path="perfil-beneficiado"
+          element={
+            <ProtectedRoute>
+              <ProfileBeneficiadoScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="eventos-beneficiado/:id"
+          element={
+            <ProtectedRoute>
+              <EventoBeneficiadoScreen />
+            </ProtectedRoute>
+          }
+        />
 
-        {userType === "moderador" ? (
-          <>
-            <Route
-              path="reportes"
-              element={
-                <ProtectedRoute>
-                  <ReportesScreen />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="reportes/:id"
-              element={
-                <ProtectedRoute>
-                  <ReporteScreen />
-                </ProtectedRoute>
-              }
-            />
-          </>
-        ) : null}
+        <Route
+          path="reportes"
+          element={
+            <ProtectedRoute>
+              <ReportesScreen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="reportes/:id"
+          element={
+            <ProtectedRoute>
+              <ReporteScreen />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="eventos/:id"

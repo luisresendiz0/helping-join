@@ -183,6 +183,7 @@ const SignInScreen = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
   };

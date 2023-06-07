@@ -24,11 +24,16 @@ import { useState } from "react";
 import { deleteEventoById } from "../../services/api/deleteEventoById";
 import { mantenerEventoById } from "../../services/api/mantenerEventoById";
 import { deleteBeneficiadoById } from "../../services/api/deleteBeneficiadoById";
+import { useAtomValue } from "jotai";
+import userAtom from "../../atoms/userAtom";
+import NotFound from "./404";
 
 const ReportesScreen = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const queryClient = useQueryClient();
+  const u = useAtomValue(userAtom);
+  console.log(u);
 
   const mantenerDisclosure = useDisclosure();
   const eliminarDisclosure = useDisclosure();
@@ -155,6 +160,10 @@ const ReportesScreen = () => {
       queryClient.invalidateQueries("reportes");
     },
   });
+
+  if (u && u["id_moderador" as keyof typeof u] === undefined) {
+    return <NotFound />;
+  }
 
   if (isLoading)
     return (
