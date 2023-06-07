@@ -11,6 +11,7 @@ import Evento from "../../types/Evento";
 import { FunctionComponent, PropsWithChildren } from "react";
 import { format } from "date-fns";
 import LocationMap from "../general/LocationMap";
+import DateText from "../general/DateText";
 
 interface DisplayEventoProps {
   evento: Evento;
@@ -50,22 +51,13 @@ const DisplayEvento: FunctionComponent<
           <LocationMap currentAddress={currentDirection} cp={cp} />
           <Box mt={4}>
             <Text as="b">Fecha inicio: </Text>
-            <Text>
-              {format(
-                new Date(props.evento.fecha_inicio),
-                "dd LLLL yyyy hh:mm aaa"
-              )}
-            </Text>
+
+            <DateText date={props.evento.fecha_inicio} />
             <Text as="b">Fecha fin:</Text>
-            <Text>
-              {format(
-                new Date(props.evento.fecha_fin),
-                "dd LLLL yyyy hh:mm aaa"
-              )}
-            </Text>
+            <DateText date={props.evento.fecha_fin} />
             <Text as="b">Dirección:</Text>
             <Text>📍 {currentDirection}</Text>
-            <Text as="b">Interesados:</Text>
+            <Text as="b">Voluntarios interesados:</Text>
             <Text>{props.evento.interesados}</Text>
           </Box>
         </GridItem>

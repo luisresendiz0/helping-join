@@ -21,6 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { getBeneficiadoById } from "../../services/api/getBeneficiadoById";
 import LocationMap from "../../components/general/LocationMap";
+import DateText from "../../components/general/DateText";
 
 const ProfileBeneficiadoByVoluntarioScreen = () => {
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
           <Text fontSize="sm" mt={4}>
             Dirección
           </Text>
-          <Text>{direccion}</Text>
+          <Text>📍 {direccion}</Text>
         </GridItem>
       </Grid>
       <Heading mb={8} size="lg">
@@ -135,16 +136,11 @@ const ProfileBeneficiadoByVoluntarioScreen = () => {
               </Heading>
               <Text mb={2}>{evento.descripcion.substring(0, 40)}...</Text>
               <Text fontSize="sm">Fecha de inicio</Text>
-              <Text mb={2}>
-                {format(
-                  new Date(evento.fecha_inicio),
-                  "dd LLLL yyyy hh:mm aaa"
-                )}
+              <DateText date={evento.fecha_inicio} />
+              <Text mt={2} fontSize="sm">
+                Fecha de fin
               </Text>
-              <Text fontSize="sm">Fecha de fin</Text>
-              <Text mb={2}>
-                {format(new Date(evento.fecha_fin), "dd LLLL yyyy hh:mm aaa")}
-              </Text>
+              <DateText date={evento.fecha_fin} />
             </Box>
           ))}
         </SimpleGrid>
