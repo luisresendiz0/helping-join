@@ -28,6 +28,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { getBeneficiadoById } from "../../services/api/getBeneficiadoById";
 import LocationMap from "../../components/general/LocationMap";
+import DateText from "../../components/general/DateText";
 
 const ProfileBeneficiadoScreen = () => {
   const navigate = useNavigate();
@@ -164,16 +165,11 @@ const ProfileBeneficiadoScreen = () => {
               </Heading>
               <Text mb={2}>{evento.descripcion.substring(0, 40)}...</Text>
               <Text fontSize="sm">Fecha de inicio</Text>
-              <Text mb={2}>
-                {format(
-                  new Date(evento.fecha_inicio),
-                  "dd LLLL yyyy hh:mm aaa"
-                )}
+              <DateText date={evento.fecha_inicio} />
+              <Text mt={2} fontSize="sm">
+                Fecha de fin
               </Text>
-              <Text fontSize="sm">Fecha de fin</Text>
-              <Text mb={2}>
-                {format(new Date(evento.fecha_fin), "dd LLLL yyyy hh:mm aaa")}
-              </Text>
+              <DateText date={evento.fecha_fin} />
             </Box>
           ))}
         </SimpleGrid>

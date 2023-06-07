@@ -226,6 +226,15 @@ const CreateEventoForm: FunctionComponent<
             type="datetime-local"
             {...register("fecha_fin", {
               required: true,
+              validate: {
+                validateDates: (value) => {
+                  const { fecha_inicio } = getValues();
+                  return (
+                    new Date(value) > new Date(fecha_inicio) ||
+                    "El rango de fecha no es válido"
+                  );
+                },
+              },
             })}
           />
         </FormControl>
