@@ -33,7 +33,7 @@ const EliminarEventoModal = (props: Props) => {
       </Button>
       <ConfirmDialog
         disclosure={disclosure}
-        title="Eliminar cuenta"
+        title="Eliminar evento"
         description="¿Estás seguro de que quieres eliminar este evento?"
         confirmButtonText="Eliminar evento"
         confirmAction={handleConfirm}

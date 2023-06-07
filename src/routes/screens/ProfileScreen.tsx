@@ -25,6 +25,7 @@ import { getVountarioById } from "../../services/api/getVoluntarioById";
 import EditarPasswordModal from "../../components/voluntario/EditarPasswordModal";
 import { useNavigate } from "react-router-dom";
 import EventoItem from "../../components/eventos/EventoItem";
+import DeleteVoluntarioModal from "../../components/voluntario/DeleteVoluntarioModal";
 
 const ProfileScreen = () => {
   const userFromAtom = useAtomValue(userAtom);
@@ -89,6 +90,7 @@ const ProfileScreen = () => {
           <HStack mt={8}>
             <EditarPerfilModal voluntario={userQuery.data as Voluntario} />
             <EditarPasswordModal voluntarioId={user.id_voluntario} />
+            <DeleteVoluntarioModal voluntarioId={user.id_voluntario} />
           </HStack>
         </GridItem>
       </Grid>
