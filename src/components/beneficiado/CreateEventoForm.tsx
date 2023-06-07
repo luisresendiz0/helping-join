@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -230,7 +231,8 @@ const CreateEventoForm: FunctionComponent<
                 validateDates: (value) => {
                   const { fecha_inicio } = getValues();
                   return (
-                    new Date(value) > new Date(fecha_inicio) ||
+                    new Date(value).getTime() >
+                      new Date(fecha_inicio).getTime() ||
                     "El rango de fecha no es válido"
                   );
                 },
@@ -238,6 +240,11 @@ const CreateEventoForm: FunctionComponent<
             })}
           />
         </FormControl>
+        {errors.fecha_fin && (
+          <Text color="red" fontSize="sm">
+            {errors.fecha_fin.message}
+          </Text>
+        )}
         <FormControl>
           <FormLabel>Imagen</FormLabel>
           <Input

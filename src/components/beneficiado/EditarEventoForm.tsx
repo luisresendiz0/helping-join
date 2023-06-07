@@ -6,6 +6,7 @@ import {
   FormLabel,
   HStack,
   Input,
+  Text,
   Textarea,
 } from "@chakra-ui/react";
 import Evento from "../../types/Evento";
@@ -112,23 +113,24 @@ const EditarEventoForm = (props: Props) => {
             {...register("fecha_fin", {
               required: "Este campo es requerido",
               validate: {
-                validateDates: (value) => {
+                validateDatesRange: (value) => {
                   const { fecha_inicio } = getValues();
-                  return (
-                    new Date(value) > new Date(fecha_inicio) ||
-                    "El rango de fecha no es válido"
-                  );
+                  const inicio = new Date(fecha_inicio).getTime();
+                  const fin = new Date(value).getTime();
+                  console.log(fecha_inicio, inicio, fin);
+                  return fin > inicio || "El rango de fecha no es válido";
                 },
               },
             })}
             type="datetime-local"
           />
-          {errors.fecha_fin && (
-            <FormErrorMessage>{errors.fecha_fin.message}</FormErrorMessage>
-          )}
         </FormControl>
       </HStack>
-
+      {errors.fecha_fin && (
+        <Text color="red" fontSize="sm">
+          {errors.fecha_fin.message}
+        </Text>
+      )}
       <FormControl isInvalid={errors.calle ? true : false}>
         <FormLabel>Calle</FormLabel>
         <Input
