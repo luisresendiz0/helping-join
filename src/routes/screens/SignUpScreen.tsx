@@ -341,7 +341,7 @@ const SignUpScreen = () => {
                 >
                   <FormLabel>
                     Nombre completo{" "}
-                    {userType === "organizacion" && "de la organizacion"}
+                    {userType === "organizacion" && "de la organización"}
                   </FormLabel>
                   <Input
                     {...register("fullname", {

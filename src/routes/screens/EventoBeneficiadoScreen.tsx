@@ -26,6 +26,7 @@ import DisplayEvento from "../../components/eventos/DisplayEvento";
 import Voluntario from "../../types/Voluntario";
 import Beneficiado from "../../types/Beneficiado";
 import EditarEventoModal from "../../components/beneficiado/EditarEventoModal";
+import EliminarEventoModal from "../../components/beneficiado/EliminarEventoModal";
 
 const EventoBeneficiadoScreen = () => {
   const query = useParams();
@@ -40,7 +41,10 @@ const EventoBeneficiadoScreen = () => {
   return (
     <Box>
       <DisplayEvento evento={data}>
-        <EditarEventoModal evento={data} />
+        <HStack spacing={4}>
+          <EditarEventoModal evento={data} />
+          <EliminarEventoModal eventoId={data.id_evento} />
+        </HStack>
       </DisplayEvento>
     </Box>
   );
