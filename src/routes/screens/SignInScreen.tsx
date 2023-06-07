@@ -13,6 +13,7 @@ import {
   Link,
   Progress,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Navigate, Link as RLink, useNavigate } from "react-router-dom";
 import LoginLayout from "../../components/general/LoginLayout";
@@ -26,6 +27,7 @@ import signInBeneficiado from "../../services/api/signInBeneficiado";
 import { useState } from "react";
 import Voluntario from "../../types/Voluntario";
 import signInModerador from "../../services/api/signInModerador";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type Inputs = {
   email: string;
@@ -38,6 +40,8 @@ const SignInScreen = () => {
   const setUser = useSetAtom(userAtom);
   const setToken = useSetAtom(tokenAtom);
   const user = useAtomValue(userAtom);
+  const [captcha, setCaptcha] = useState(false);
+  const toast = useToast();
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -50,8 +54,24 @@ const SignInScreen = () => {
     setFocus,
   } = useForm<Inputs>();
 
+  const onChangeCaptcha = (token: string | null) => {
+    setCaptcha(token ? true : false);
+  };
+
   const handleOnSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
+
+    if (!captcha) {
+      toast({
+        title: "Error",
+        description: "Es necesario completar el captcha",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       const signInAsVoluntario = await signInVoluntario(data);
@@ -234,11 +254,22 @@ const SignInScreen = () => {
               <FormErrorMessage>{errors.password.message}</FormErrorMessage>
             )}
           </FormControl>
-          <Flex justify="flex-end" mb={8}>
+          <Flex justify="flex-end">
             <Link as={RLink} color="orange.500" to="/recover-password">
               Olvidé mi contraseña
             </Link>
           </Flex>
+          <Box
+            my={8}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <ReCAPTCHA
+              sitekey="6LfSznYmAAAAAG4LcnJvTmccViY2hPQWp5rD9DLC"
+              onChange={onChangeCaptcha}
+            />
+          </Box>
           <Flex justify="center">
             <Button
               onClick={handleSubmit(handleOnSubmit)}

@@ -17,15 +17,20 @@ import userAtom from "../../atoms/userAtom";
 import { useAtomValue, useSetAtom } from "jotai";
 import Voluntario from "../../types/Voluntario";
 import { getVountarioById } from "../../services/api/getVoluntarioById";
+import DateText from "../../components/general/DateText";
+
+interface RecomendationWithProbability extends Recomendation {
+  probabilidad: number;
+}
 
 const RecommendationsScreen = () => {
   const userValue = useAtomValue(userAtom);
   const setUser = useSetAtom(userAtom);
   const user = userValue as Voluntario;
 
-  const [recomendations, setRecomendations] = useState<Array<Recomendation>>(
-    []
-  );
+  const [recomendations, setRecomendations] = useState<
+    Array<RecomendationWithProbability>
+  >([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -78,32 +83,34 @@ const RecommendationsScreen = () => {
               cursor="pointer"
               p={4}
               onClick={() => handleOnClick(recomendation.id_evento)}
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
             >
-              <Text fontWeight="bold" fontSize={18}>
-                {recomendation.nombre}
-              </Text>
-              <Text>{recomendation.descripcion.substring(0, 40)}...</Text>
-              <Text mt={2} fontSize="sm">Fecha de inicio</Text>
-              <Text>
-                {format(
-                  new Date(recomendation.fecha_inicio),
-                  "dd LLLL yyyy hh:mm aaa"
-                )}
-              </Text>
-              <Text mt={2} fontSize="sm">Fecha de fin</Text>
-              <Text>
-                {format(
-                  new Date(recomendation.fecha_fin),
-                  "dd LLLL yyyy hh:mm aaa"
-                )}
-              </Text>
-              <Wrap mt={2}>
-                {recomendation.categorias.split(",").map((cat) => (
-                  <WrapItem key={cat}>
-                    <Tag>{cat}</Tag>
-                  </WrapItem>
-                ))}
-              </Wrap>
+              <Box>
+                <Text fontWeight="bold" fontSize={18}>
+                  {recomendation.nombre}
+                </Text>
+                <Text>{recomendation.descripcion.substring(0, 40)}...</Text>
+                <Text mt={2} fontSize="sm">
+                  Fecha de inicio
+                </Text>
+                <DateText date={recomendation.fecha_inicio} />
+                <Text mt={2} fontSize="sm">
+                  Fecha de fin
+                </Text>
+                <DateText date={recomendation.fecha_fin} />
+                <Wrap mt={2}>
+                  {recomendation.categorias.split(",").map((cat) => (
+                    <WrapItem key={cat}>
+                      <Tag>{cat}</Tag>
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              </Box>
+              <Box display="flex" justifyContent="flex-end">
+                <Tag colorScheme="orange">{recomendation.probabilidad}</Tag>
+              </Box>
             </Box>
           );
         })}

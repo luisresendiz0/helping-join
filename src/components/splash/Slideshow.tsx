@@ -81,7 +81,7 @@ const Slideshow = (props: SlideshowProps) => {
                         size="lg"
                         onClick={() => navigate("/signin")}
                       >
-                        Regístrate
+                        Comenzar
                       </Button>
                       <Button
                         color="white"

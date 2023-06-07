@@ -2,6 +2,7 @@ import { Box, Text, Wrap, WrapItem, Tag } from "@chakra-ui/react";
 import Evento from "../../types/Evento";
 import { FunctionComponent, PropsWithChildren } from "react";
 import { format } from "date-fns";
+import DateText from "../general/DateText";
 
 interface Cats {
   categorias: string;
@@ -37,13 +38,10 @@ const EventoItem: FunctionComponent<PropsWithChildren<EventoItemProps>> = (
       </Text>
       <Text mb={2}>{evento.descripcion.substring(0, 40)}...</Text>
       <Text fontSize="sm">Fecha de inicio</Text>
-      
-      <Text>
-        {format(new Date(evento.fecha_inicio), "dd LLLL yyyy hh:mm aaa")}
-      </Text>
+
+      <DateText date={evento.fecha_inicio} />
       <Text fontSize="sm">Fecha de fin</Text>
-      <Text>{format(new Date(evento.fecha_fin), "dd LLLL yyyy hh:mm aaa")}
-      </Text>
+      <DateText date={evento.fecha_fin} />
       <Wrap mt={2}>
         {evento.categorias.split(",").map((cat) => (
           <WrapItem key={cat}>

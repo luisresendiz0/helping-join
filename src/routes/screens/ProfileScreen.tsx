@@ -24,6 +24,7 @@ import EditarPerfilModal from "../../components/voluntario/EditarPerfilModal";
 import { getVountarioById } from "../../services/api/getVoluntarioById";
 import EditarPasswordModal from "../../components/voluntario/EditarPasswordModal";
 import { useNavigate } from "react-router-dom";
+import EventoItem from "../../components/eventos/EventoItem";
 
 const ProfileScreen = () => {
   const userFromAtom = useAtomValue(userAtom);
@@ -99,32 +100,11 @@ const ProfileScreen = () => {
           {eventosInteresQuery.data && (
             <SimpleGrid columns={2} spacing={[4, 8]} w="full">
               {eventosInteresQuery.data.map((evento) => (
-                <Box
+                <EventoItem
                   key={evento.id_evento}
-                  h={200}
-                  borderColor="orange.300"
-                  borderWidth={1}
-                  borderStyle="solid"
-                  borderRadius={8}
-                  p={4}
+                  evento={evento}
                   onClick={() => navigate(`/eventos/${evento.id_evento}`)}
-                >
-                  <Text fontWeight="bold">{evento.nombre}</Text>
-                  <Text>
-                    Inicia:{" "}
-                    {format(
-                      new Date(evento.fecha_inicio),
-                      "dd LLLL yyyy hh:mm aaa"
-                    )}
-                  </Text>
-                  <Text>
-                    Termina:{" "}
-                    {format(
-                      new Date(evento.fecha_fin),
-                      "dd LLLL yyyy hh:mm aaa"
-                    )}
-                  </Text>
-                </Box>
+                />
               ))}
             </SimpleGrid>
           )}
@@ -134,34 +114,13 @@ const ProfileScreen = () => {
             Participaciones anteriores
           </Heading>
           {eventosPasadosInteresQuery.data && (
-            <SimpleGrid columns={2} spacing={10} w="full" h="container.sm">
+            <SimpleGrid columns={2} spacing={10} w="full">
               {eventosPasadosInteresQuery.data.map((evento) => (
-                <Box
+                <EventoItem
                   key={evento.id_evento}
-                  h={200}
-                  borderColor="orange.300"
-                  borderWidth={1}
-                  borderStyle="solid"
-                  borderRadius={8}
-                  p={4}
+                  evento={evento}
                   onClick={() => navigate(`/eventos/${evento.id_evento}`)}
-                >
-                  <Text fontWeight="bold">{evento.nombre}</Text>
-                  <Text>
-                    Inicia:{" "}
-                    {format(
-                      new Date(evento.fecha_inicio),
-                      "dd LLLL yyyy hh:mm aaa"
-                    )}
-                  </Text>
-                  <Text>
-                    Termina:{" "}
-                    {format(
-                      new Date(evento.fecha_fin),
-                      "dd LLLL yyyy hh:mm aaa"
-                    )}
-                  </Text>
-                </Box>
+                />
               ))}
             </SimpleGrid>
           )}

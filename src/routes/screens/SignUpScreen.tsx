@@ -188,7 +188,7 @@ const SignUpScreen = () => {
           toast({
             title: "Cuenta creada exitosamente",
             description:
-              "Hemos enviado un correo de confirmacion a tu correo electronico.",
+              "Hemos enviado un correo de confirmación a tu correo electrónico.",
             status: "success",
             duration: 9000,
             isClosable: true,
@@ -235,7 +235,7 @@ const SignUpScreen = () => {
           toast({
             title: "Cuenta creada exitosamente",
             description:
-              "Hemos enviado un correo de confirmacion a tu correo electronico.",
+              "Hemos enviado un correo de confirmación a tu correo electrónico.",
             status: "success",
             duration: 9000,
             isClosable: true,
@@ -326,7 +326,7 @@ const SignUpScreen = () => {
                       </Radio>
                       <Radio value="voluntario">
                         <Tooltip
-                          label="Persona interesada en brindar su ayuda a traves de eventos"
+                          label="Persona interesada en brindar su ayuda a través de eventos"
                           aria-label="A tooltip"
                         >
                           Voluntario
@@ -373,7 +373,7 @@ const SignUpScreen = () => {
                   </FormControl>
                 )}
                 <FormControl isInvalid={errors.email ? true : false} isRequired>
-                  <FormLabel>Correo electronico</FormLabel>
+                  <FormLabel>Correo electrónico</FormLabel>
                   <Input
                     {...register("email", {
                       required: "Este campo es requerido",
@@ -448,7 +448,7 @@ const SignUpScreen = () => {
               <Text>
                 Ya tiene una cuenta?{" "}
                 <Link color="orange.500" as={RLink} to="/signin">
-                  Iniciar sesion
+                  Iniciar sesión
                 </Link>
               </Text>
               <Button
@@ -525,7 +525,7 @@ const SignUpScreen = () => {
                   isInvalid={errors.alcaldia ? true : false}
                   isRequired
                 >
-                  <FormLabel>Alcaldia</FormLabel>
+                  <FormLabel>Alcaldía</FormLabel>
                   <Select
                     defaultValue={
                       estados[watchEntidad as keyof typeof estados]?.[0]
@@ -553,7 +553,7 @@ const SignUpScreen = () => {
                   isInvalid={errors.codigo_postal ? true : false}
                   isRequired
                 >
-                  <FormLabel>Codigo postal</FormLabel>
+                  <FormLabel>Código postal</FormLabel>
                   <Input
                     {...register("codigo_postal", {
                       required: "Este campo es obligatorio",
@@ -591,7 +591,7 @@ const SignUpScreen = () => {
               </FormControl>
 
               <FormControl isInvalid={errors.colonia ? true : false} isRequired>
-                <FormLabel>Telefono</FormLabel>
+                <FormLabel>Teléfono</FormLabel>
                 <Input
                   {...register("telefono", {
                     required: "Este campo es obligatorio",
@@ -618,7 +618,7 @@ const SignUpScreen = () => {
         {step === 2 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
                 {isOrganizacion || isCivil
                   ? "Seleccione las categorias a las que pertenece"
@@ -686,7 +686,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button onClick={() => setStep(1)} variant="outline">
-                Atras
+                Atrás
               </Button>
               {isOrganizacion || isCivil ? (
                 <Button
@@ -711,7 +711,7 @@ const SignUpScreen = () => {
         {step === 3 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
                 Seleccione las frases que mas le describen
               </Text>
@@ -742,7 +742,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button onClick={() => setStep((s) => s - 1)} variant="outline">
-                Atras
+                Atrás
               </Button>
               <Button
                 colorScheme="orange"
@@ -757,9 +757,9 @@ const SignUpScreen = () => {
         {step === 4 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
-                Seleccione las frases que mas le describen
+                Seleccione las frases que más le describen
               </Text>
               <Box>
                 <Stack>
@@ -788,7 +788,7 @@ const SignUpScreen = () => {
             </VStack>
             <Flex justify="space-between" mt={4}>
               <Button onClick={() => setStep((s) => s - 1)} variant="outline">
-                Atras
+                Atrás
               </Button>
               <Button
                 colorScheme="orange"
@@ -803,9 +803,9 @@ const SignUpScreen = () => {
         {step === 5 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
-                Seleccione las frases que mas le describen
+                Seleccione las frases que más le describen
               </Text>
               <Box>
                 <Stack>
@@ -849,7 +849,7 @@ const SignUpScreen = () => {
         {step === 6 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
                 Seleccione las frases que mas le describen
               </Text>
@@ -895,7 +895,7 @@ const SignUpScreen = () => {
         {step === 7 && (
           <Card>
             <VStack spacing={3}>
-              <Heading size="md">Categorias</Heading>
+              <Heading size="md">Categorías</Heading>
               <Text fontWeight={500}>
                 Seleccione las frases que mas le describen
               </Text>
