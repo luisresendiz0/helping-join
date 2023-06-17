@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-router-dom";
 import { updateEventoBeneficiado } from "../../services/api/updateEventoBeneficiado";
 import { uploadImage } from "../../services/firebase/uploadImage";
+import normalizeDate from "../../utils/normalizeDate";
 
 interface Props {
   evento: Evento;
@@ -45,6 +46,15 @@ const EditarEventoForm = (props: Props) => {
 
   const onSubmit = async (data: Inputs) => {
     // console.log(data);
+
+    if (!data.fecha_inicio.endsWith("Z")) {
+      data.fecha_inicio += "Z";
+    }
+
+    if (!data.fecha_fin.endsWith("Z")) {
+      data.fecha_fin += "Z";
+    }
+
     let onEvento = data as unknown as Evento;
 
     if (data.imagen.length > 0) {
@@ -60,6 +70,11 @@ const EditarEventoForm = (props: Props) => {
 
     props.onClose();
   };
+  console.log(
+    props.evento,
+    props.evento.fecha_inicio.slice(0, -1),
+    normalizeDate(props.evento.fecha_inicio)
+  );
   return (
     <Box>
       <FormControl isInvalid={errors.nombre ? true : false}>
@@ -94,7 +109,7 @@ const EditarEventoForm = (props: Props) => {
         <FormControl isInvalid={errors.fecha_inicio ? true : false}>
           <FormLabel>Fecha de inicio</FormLabel>
           <Input
-            defaultValue={props.evento.fecha_inicio.slice(0, -1)}
+            defaultValue={normalizeDate(props.evento.fecha_inicio).slice(0, -1)}
             type="datetime-local"
             placeholder="Fecha de inicio"
             {...register("fecha_inicio", {
@@ -108,7 +123,7 @@ const EditarEventoForm = (props: Props) => {
         <FormControl isInvalid={errors.fecha_fin ? true : false}>
           <FormLabel>Fecha de fin</FormLabel>
           <Input
-            defaultValue={props.evento.fecha_fin.slice(0, -1)}
+            defaultValue={normalizeDate(props.evento.fecha_fin).slice(0, -1)}
             placeholder="Fecha de fin"
             {...register("fecha_fin", {
               required: "Este campo es requerido",
