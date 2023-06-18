@@ -232,7 +232,7 @@ const ReportesScreen = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {data.map((reporte: Reporte) => {
+              {data.filter(r => r.estatus !== "verificado").map((reporte: Reporte) => {
                 return (
                   <Tr key={reporte.id_evento}>
                     <Td>{reporte.id_evento}</Td>
