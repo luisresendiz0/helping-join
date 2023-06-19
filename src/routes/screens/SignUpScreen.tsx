@@ -298,8 +298,8 @@ const SignUpScreen = () => {
             <Box>
               <VStack spacing={4}>
                 <Heading size="md">
-                  Informacion{" "}
-                  {isOrganizacion ? "de la organizacion" : "personal"}
+                  Información{" "}
+                  {isOrganizacion ? "de la organización" : "personal"}
                 </Heading>
                 <FormControl as="fieldset" isRequired>
                   <FormLabel as="legend">Tipo de usuario</FormLabel>

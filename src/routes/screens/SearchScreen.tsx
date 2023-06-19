@@ -213,7 +213,7 @@ const SearchScreen = () => {
                 size="lg"
                 type="text"
                 onChange={(e) => debouncedText(e.target.value)}
-                placeholder="Busca por nombre de evento, organización, descripcion, etc."
+                placeholder="Busca por nombre de evento, organización, descripción, etc."
               />
             </FormControl>
           </Box>
@@ -377,7 +377,7 @@ const SearchScreen = () => {
           </VStack>
 
           <FormControl>
-            <FormLabel>Categoria</FormLabel>
+            <FormLabel>Categoría</FormLabel>
             <Select
               placeholder="Todas las categorias"
               {...register("category")}
