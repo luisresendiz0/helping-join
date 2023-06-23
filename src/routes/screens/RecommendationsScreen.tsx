@@ -71,7 +71,7 @@ const RecommendationsScreen = () => {
       <Heading mb={8}>Recomendaciones</Heading>
       <SimpleGrid columns={[1, 4]} spacing={8} w="full">
         {recomendations.map((recomendation) => {
-          let proba = (recomendation.probabilidad) * 1000;
+          let proba = (recomendation.probabilidad) * 100;
           let strproba = `${proba}`.substring(0, 5) + "%";
           return (
             <Box
