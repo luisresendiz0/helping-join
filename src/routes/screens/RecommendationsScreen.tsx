@@ -71,6 +71,8 @@ const RecommendationsScreen = () => {
       <Heading mb={8}>Recomendaciones</Heading>
       <SimpleGrid columns={[1, 4]} spacing={8} w="full">
         {recomendations.map((recomendation) => {
+          let proba = (recomendation.probabilidad + 0.5) * 100;
+          let strproba = `${proba}`.substring(0, 5) + "%";
           return (
             <Box
               key={recomendation.id_evento}
@@ -109,7 +111,7 @@ const RecommendationsScreen = () => {
                 </Wrap>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Tag colorScheme="orange">{recomendation.probabilidad}</Tag>
+                <Tag colorScheme="orange">{strproba}</Tag>
               </Box>
             </Box>
           );
